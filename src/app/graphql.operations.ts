@@ -5,12 +5,25 @@ export const GET_USERS=gql`
 
 query GetAllUsers{
 allUsers{
-id
-
+  id
   firstName
   lastName
   email
   password
 }
 }
+`
+
+
+export const CREATE_USER=gql`
+mutation createUser($createUserInput: CreateUserInput!) {
+  createUser(createUserInput: $createUserInput) {
+    id
+    firstName
+    lastName
+    email
+    password
+  }
+}
+
 `
