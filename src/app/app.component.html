@@ -1,3 +1,17 @@
-<div class="text-2xl shadow">Hello sbar</div>
-<app-homepage></app-homepage>
-<router-outlet></router-outlet>
+
+
+<div class="min-h-screen bg-[#213f57] text-white flex flex-col">
+    <header class="w-full py-4 bg-[#29495f] shadow-md sticky top-0 z-50">
+    <app-header></app-header>
+</header>
+  
+   
+    <main class="flex-1">
+      <router-outlet></router-outlet>
+    </main>
+  
+    <footer class="w-full py-4 bg-[#29495f] text-[#cbd5e0] text-center">
+    <app-footer></app-footer>
+    </footer>
+  </div>
+  

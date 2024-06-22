@@ -3,6 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { GET_USERS } from 'src/app/graphql.operations';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -35,5 +36,6 @@ export class HomepageComponent implements OnInit {
   }
  })
   }
+
 
 }

@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage/homepage.component';
+import { MaterialModule } from 'src/app/material.module';
+import { LoginComponent } from './login/login.component';
+import { CreateHospitalComponent } from './create-hospital/create-hospital.component';
 
 
 
 @NgModule({
   declarations: [
-    HomepageComponent
+    HomepageComponent,
+    LoginComponent,
+    CreateHospitalComponent,
+   
+   
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   exports:[
-    HomepageComponent
+    HomepageComponent,
+  
   ]
 })
 export class PagesModule { }
