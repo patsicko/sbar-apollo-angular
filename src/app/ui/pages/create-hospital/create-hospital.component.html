@@ -1,1 +1,111 @@
-<p>create-hospital works!</p>
+<div class="container mx-auto flex flex-col items-center justify-center py-10">
+    <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-full max-w-2xl">
+      <h2 class="text-2xl font-semibold text-center mb-6 text-[#4fd1c5]">Create Hospital</h2>
+      <form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="hospitalName">Hospital Name</label>
+            <input
+              formControlName="hospitalName"
+              id="hospitalName"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="hospitalForm.get('hospitalName')?.hasError('required') && (hospitalForm.get('hospitalName')?.touched || submitted)"
+                class="text-red-500">Hospital Name is required</div>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="district">District</label>
+            <input
+              formControlName="district"
+              id="district"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="hospitalForm.get('district')?.hasError('required') && (hospitalForm.get('district')?.touched || submitted)"
+            class="text-red-500">District is required</div>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="sector">Sector</label>
+            <input
+              formControlName="sector"
+              id="sector"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="hospitalForm.get('sector')?.hasError('required') && (hospitalForm.get('sector')?.touched || submitted)"
+            class="text-red-500">Sector is required</div>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="firstName">First Name</label>
+            <input
+              formControlName="firstName"
+              id="firstName"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="hospitalForm.get('firstName')?.hasError('required') && (hospitalForm.get('firstName')?.touched || submitted)"
+            class="text-red-500">First Name is required</div>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="lastName">Last Name</label>
+            <input
+              formControlName="lastName"
+              id="lastName"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="hospitalForm.get('lastName')?.hasError('required') && (hospitalForm.get('lastName')?.touched || submitted)"
+            class="text-red-500">Last Name is required</div>
+          </div>
+        </div>
+  
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+        <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="email">Email</label>
+            <div class="relative">
+                <span class="material-icons absolute left-2 top-2 text-[#4fd1c5]">email</span>
+                <input
+                  formControlName="email"
+                  id="email"
+                  type="email"
+                  class="w-full pl-10 pr-3 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+                />
+                <div *ngIf="hospitalForm.get('email')?.hasError('required') && (hospitalForm.get('email')?.touched || submitted)"
+                class="text-red-500">Email is required</div>
+                <div *ngIf="hospitalForm.get('email')?.hasError('email') && (hospitalForm.get('email')?.touched || submitted)"
+                class="text-red-500 text-xs">Please enter a valid email address</div>
+              </div>
+        </div>
+
+        <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="password">Password</label>
+            <div class="relative">
+                <span class="material-icons absolute left-2 top-2 text-[#4fd1c5]">lock</span>
+                <input
+                  formControlName="password"
+                  id="password"
+                  type="password"
+                  class="w-full pl-10 pr-3 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+                />
+                <div *ngIf="hospitalForm.get('password')?.hasError('required') && (hospitalForm.get('password')?.touched || submitted) "
+                class="text-red-500"> Password is required </div>
+              </div>
+   
+        </div>
+
+      </div>
+    
+        <button type="submit" class="w-full bg-[#4fd1c5] hover:bg-[#38a89d] text-white font-semibold py-2 rounded-md"  [disabled]="hospitalForm.invalid">Create Hospital</button>
+      </form>
+    </div>
+  </div>
+  

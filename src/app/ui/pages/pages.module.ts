@@ -4,6 +4,15 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { MaterialModule } from 'src/app/material.module';
 import { LoginComponent } from './login/login.component';
 import { CreateHospitalComponent } from './create-hospital/create-hospital.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { DepartmentsComponent } from './departments/departments.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { RouterModule } from 'src/app/app-routing.module';
+import { UnitsComponent } from './units/units.component';
+import { StaffsComponent } from './staffs/staffs.component';
+import { PatientsComponent } from './patients/patients.component';
 
 
 
@@ -12,12 +21,21 @@ import { CreateHospitalComponent } from './create-hospital/create-hospital.compo
     HomepageComponent,
     LoginComponent,
     CreateHospitalComponent,
+    SignupComponent,
+    AdminDashboardComponent,
+    DepartmentsComponent,
+    UnitsComponent,
+    StaffsComponent,
+    PatientsComponent,
    
    
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    
   ],
   exports:[
     HomepageComponent,

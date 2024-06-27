@@ -1,0 +1,39 @@
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto">
+      <div class="p-6">
+        <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
+        <nav class="space-y-2">
+          <a routerLink="/dashboard/admin/departments" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">business</span>
+            Departments
+          </a>
+          <a routerLink="/dashboard/admin/units" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">layers</span>
+            Units
+          </a>
+          <a routerLink="/dashboard/admin/staffs" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">people</span>
+            Staff
+          </a>
+          <a routerLink="/patients" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">local_hospital</span>
+            Patients
+          </a>
+          <a routerLink="/transfers" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">transfer_within_a_station</span>
+            Transfers
+          </a>
+          <a routerLink="/handovers" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
+            <span class="material-icons mr-3">swap_horiz</span>
+            Handovers
+          </a>
+        </nav>
+      </div>
+    </aside>
+    <!-- Main content -->
+    <main class="flex-1 p-10 bg-gray-100 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+  
