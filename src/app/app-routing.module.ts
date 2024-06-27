@@ -9,6 +9,7 @@ import { AdminDashboardComponent } from './ui/pages/admin-dashboard/admin-dashbo
 import { DepartmentsComponent } from './ui/pages/departments/departments.component';
 import { UnitsComponent } from './ui/pages/units/units.component';
 import { StaffsComponent } from './ui/pages/staffs/staffs.component';
+import { PatientsComponent } from './ui/pages/patients/patients.component';
 
 const routes: Routes = [
  
@@ -23,7 +24,8 @@ const routes: Routes = [
   children: [
     { path: 'departments', component: DepartmentsComponent },
     { path: 'units', component: UnitsComponent },
-    {path:'staffs',component:StaffsComponent}
+    {path:'staffs',component:StaffsComponent},
+    {path:'patients',component:PatientsComponent}
     // Add other child routes here
   ]
 }
