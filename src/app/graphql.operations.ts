@@ -27,3 +27,11 @@ mutation createUser($createUserInput: CreateUserInput!) {
 }
 
 `
+
+export const LOGIN =gql`
+mutation($loginInput:LoginInput!){
+  login(loginInput:$loginInput){
+    accessToken
+  }
+}
+`

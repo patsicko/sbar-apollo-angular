@@ -5,7 +5,6 @@ import { MaterialModule } from 'src/app/material.module';
 import { LoginComponent } from './login/login.component';
 import { CreateHospitalComponent } from './create-hospital/create-hospital.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SignupComponent } from './signup/signup.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -13,6 +12,9 @@ import { RouterModule } from 'src/app/app-routing.module';
 import { UnitsComponent } from './units/units.component';
 import { StaffsComponent } from './staffs/staffs.component';
 import { PatientsComponent } from './patients/patients.component';
+import { OverviewComponent } from './overview/overview.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ForbidenComponent } from './forbiden/forbiden.component';
 
 
 
@@ -21,12 +23,14 @@ import { PatientsComponent } from './patients/patients.component';
     HomepageComponent,
     LoginComponent,
     CreateHospitalComponent,
-    SignupComponent,
     AdminDashboardComponent,
     DepartmentsComponent,
     UnitsComponent,
     StaffsComponent,
     PatientsComponent,
+    OverviewComponent,
+    NotFoundComponent,
+    ForbidenComponent,
    
    
   ],

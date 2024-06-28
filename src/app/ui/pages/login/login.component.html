@@ -1,7 +1,7 @@
 <div class="container mx-auto flex flex-col items-center justify-center py-10">
     <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-2xl font-semibold text-center mb-6 text-[#4fd1c5]">Login</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="loginForm">
         <div class="mb-4">
           <label class="block text-[#cbd5e0] mb-2" for="email">Email</label>
           <div class="relative">
@@ -35,7 +35,7 @@
                     class="text-red-500">Password is required</div>
         </div>
   
-        <button type="submit" class="w-full bg-[#4fd1c5] hover:bg-[#38a89d] text-white font-semibold py-2 rounded-md" [disabled]="loginForm.invalid">Login</button>
+        <button (click)="onSubmit()" type="submit" class="w-full bg-[#4fd1c5] hover:bg-[#38a89d] text-white font-semibold py-2 rounded-md" [disabled]="loginForm.invalid">Login</button>
       </form>
     </div>
   </div>

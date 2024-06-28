@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { CREATE_USER, GET_USERS } from '../graphql.operations';
+import { CREATE_USER, GET_USERS, LOGIN } from '../graphql.operations';
+import { LoginInput } from '../interfaces/user.dto';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private apollo:Apollo) { }
+  constructor(
+    private apollo:Apollo,
+    private cookieService:CookieService
+
+  ) { }
   private getAuthHeaders() {
-    // const token = localStorage.getItem('authToken'); 
-    const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoicnJoMjJAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiYWRtaW5ycmgyIiwibGFzdE5hbWUiOiJhZG1pbnJyaDIiLCJyb2xlIjoiYWRtaW4iLCJhcHByb3ZlZCI6dHJ1ZSwiaWF0IjoxNzE5MDAxMDAyLCJleHAiOjE3MTk2OTIyMDJ9.zjRgTX_NzWrADbfmHEF6hPWH4-Y2Abg5fXjG9prYK1U'
+ 
+    const token=this.cookieService.get('accessToken')
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
@@ -39,6 +45,16 @@ export class UserService {
       refetchQueries:[
         {query:GET_USERS}
       ]
+    })
+  }
+
+  login(loginInput:LoginInput):Observable<any>{
+   return this.apollo.mutate({
+    mutation:LOGIN,
+    variables:{
+      loginInput
+    },
+    context: {withCredentials: true }
     })
   }
 
