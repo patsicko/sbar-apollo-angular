@@ -75,15 +75,32 @@ export const GET_UNITS = gql`
 }
 `;
 
-export const GET_PATIENTS = gql`
-  query GetPatients($unitId: ID!) {
-    unit(id: $unitId) {
-      patients {
-        id
-        name
-        age
-        condition
-      }
-    }
+export const GET_PATIENTS_BY_UNITY = gql`
+  query findPatientsByUnity($unitId:Int!){
+  findPatientsByUnity(unitId:$unitId){
+    id
+    firstName
+    lastName
   }
+}
 `;
+
+
+export const GET_SBARS = gql `
+query findSbarsByPatient($patientId:Int!){
+ findSbarsByPatient(patientId:$patientId){
+    id
+  situation
+  background
+  assessment
+  recommendation
+  createdBy{
+    firstName
+    lastName
+    role
+  }
+  createdAt
+  }
+  
+}
+`
