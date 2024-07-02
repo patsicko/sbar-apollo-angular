@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
           const decodedToken: any = jwtDecode(tokenFromCookie);
           console.log("decoded token", decodedToken);
           if(decodedToken.role==='admin'){
-            this.router.navigate(['/create/hospital'])
+            this.router.navigate(['/dashboard/admin'])
           }else if(decodedToken.role==='superAdmin'){
             this.router.navigate(['/dashboard/admin'])
           }

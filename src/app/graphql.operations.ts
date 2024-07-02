@@ -35,3 +35,55 @@ mutation($loginInput:LoginInput!){
   }
 }
 `
+
+export const CREATE_HOSPITAL=gql`
+mutation($createHospitalInput:CreateHospitalWithAdminInput!){
+  createHospital(createHospitalInput:$createHospitalInput){
+    hospitalId
+    district
+    sector
+  }
+}
+
+`
+
+
+
+export const GET_DEPARTMENTS = gql`
+query GetDepartments{
+  getDepartments{
+    id
+    name
+    unities{
+      id
+      name
+    }  
+  }
+}
+`;
+
+export const GET_UNITS = gql`
+  query getUnities($departmentId:Int!){
+  getUnities(departmentId:$departmentId){
+    id
+    name
+    department{
+      name
+      id
+    }
+  }
+}
+`;
+
+export const GET_PATIENTS = gql`
+  query GetPatients($unitId: ID!) {
+    unit(id: $unitId) {
+      patients {
+        id
+        name
+        age
+        condition
+      }
+    }
+  }
+`;

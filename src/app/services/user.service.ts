@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { CREATE_USER, GET_USERS, LOGIN } from '../graphql.operations';
-import { LoginInput } from '../interfaces/user.dto';
+import { CREATE_HOSPITAL, CREATE_USER, GET_USERS, LOGIN } from '../graphql.operations';
+import { CreateHospitalInput, LoginInput } from '../interfaces/user.dto';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -58,4 +58,14 @@ export class UserService {
     })
   }
 
+
+createHospital(createHospitalInput:CreateHospitalInput):Observable<any>{
+  return this.apollo.mutate({
+    mutation:CREATE_HOSPITAL,
+    variables:{
+      createHospitalInput
+    }
+  })
+}
+  
 }

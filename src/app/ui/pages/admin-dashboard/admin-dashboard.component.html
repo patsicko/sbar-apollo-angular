@@ -1,50 +1,59 @@
 <div class="flex h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto">
-      <div class="p-6">
-        <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
-        <hr class=" my-8">
-        <nav class="space-y-2">
-          <a routerLink="/dashboard/admin/departments" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">business</span>
-            Departments
-          </a>
-          <a routerLink="/dashboard/admin/units" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">layers</span>
-            Units
-          </a>
-          <a routerLink="/dashboard/admin/staffs" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">people</span>
-            Staff
-          </a>
-          <a routerLink="/dashboard/admin/patients" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">local_hospital</span>
-            Patients
-          </a>
-         
-          <a routerLink="/handovers" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">swap_horiz</span>
-            Handovers
-          </a>
-          <br>
-          <hr >
-          <br>
-          <br>
-          <a routerLink="/logout" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md">
-            <span class="material-icons mr-3">logout</span>
-            Logout
-          </a>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto">
+    <div class="p-6">
+      <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
+      <hr class="my-8">
+      <nav class="space-y-2">
+        <a (mouseenter)="showDepartments()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
+          <span class="material-icons mr-3">business</span>
+          Departments
+        </a>
+        <!-- Other sidebar links -->
+      </nav>
+    </div>
+  </aside>
 
-        
-        </nav>
+  <!-- Main content -->
+  <main class="flex-1 p-10 bg-gray-100 overflow-y-auto relative" (mouseleave)="hideModels()">
+    <router-outlet></router-outlet>
+    
+    <div *ngIf="showDepartmentList" (mouseenter)="keepDepartmentsVisible()" class="absolute bg-[#355f7e] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-80 top-5 left-5 z-10">
+      <h3 class="text-xl font-semibold mb-4">Departments</h3>
+      <ul>
+        <li *ngFor="let department of departments" (mouseenter)="showUnits(department.id)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+          {{ department.name }}
+        </li>
+      </ul>
+    </div>
 
-      </div>
-     
-     
-    </aside>
-    <!-- Main content -->
-    <main class="flex-1 p-10 bg-gray-100 overflow-y-auto">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-  
+    <div *ngIf="showUnitList" (mouseenter)="keepUnitsVisible()" class="absolute bg-[#317eb4] text-[#cbd5e0] font-bold shadow-lg rounded-lg p-6 w-80 top-5 left-[352px] mt-20 z-10">
+      <h3 class="text-xl font-semibold mb-4">Units of {{ selectedDepartmentName }}</h3>
+      <ul>
+        <li *ngFor="let unit of units" (click)="selectUnit(unit)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+          {{ unit.name }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="selectedUnit">
+      <h2 class="text-2xl font-bold mb-6">{{ selectedUnit.name }}</h2>
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Name</th>
+            <th class="py-2 px-4 border-b">Age</th>
+            <th class="py-2 px-4 border-b">Condition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients">
+            <td class="py-2 px-4 border-b">{{ patient.name }}</td>
+            <td class="py-2 px-4 border-b">{{ patient.age }}</td>
+            <td class="py-2 px-4 border-b">{{ patient.condition }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
