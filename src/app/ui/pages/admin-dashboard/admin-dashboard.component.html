@@ -38,34 +38,51 @@
       </ul>
     </div>
 
-    <!-- Patients Modal -->
-    <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-80 top-5 left-[624px] mt-20 z-10">
+  
+    <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-[380px] top-5 left-[624px] mt-20 z-10">
       <h3 class="text-xl font-semibold mb-4">Patients in {{ selectedUnit }}</h3>
-      <ul>
-        <li *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
-          {{patient.id}} | {{ patient.firstName }} {{ patient.lastName }}
-        </li>
-      </ul>
+      <table class="min-w-full bg-[#206598] text-[#cbd5e0]">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">First Name</th>
+            <th class="py-2 px-4 border-b">Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+            <td class="py-2 px-4 border-b">{{patient.id}}</td>
+            <td class="py-2 px-4 border-b">{{ patient.firstName }}</td>
+            <td class="py-2 px-4 border-b">{{ patient.lastName }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
-      <table *ngIf="sbars && sbars.length > 0" class="min-w-full bg-white text-black">
+      <table *ngIf="sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
+            <th class="py-2 px-4 border-b">Id</th>
             <th class="py-2 px-4 border-b">Situation</th>
             <th class="py-2 px-4 border-b">Background</th>
             <th class="py-2 px-4 border-b">Assessment</th>
             <th class="py-2 px-4 border-b">Recommendation</th>
+            <th class="py-2 px-4 border-b">Created by</th>
+            <th class="py-2 px-4 border-b">Created at</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let sbar of sbars">
+            <td class="py-2 px-4 border-b">{{ sbar.id }}</td>
             <td class="py-2 px-4 border-b">{{ sbar.situation }}</td>
             <td class="py-2 px-4 border-b">{{ sbar.background }}</td>
             <td class="py-2 px-4 border-b">{{ sbar.assessment }}</td>
             <td class="py-2 px-4 border-b">{{ sbar.recommendation }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.createdAt }} </td>
           </tr>
         </tbody>
       </table>
