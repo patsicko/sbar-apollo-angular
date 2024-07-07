@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Router } from '@angular/router';
+import { StateService } from 'src/app/services/state.service';
 
 
 
@@ -30,6 +31,7 @@ export class AdminDashboardComponent implements OnInit {
     private departmentService: DepartmentService,
     private fb:FormBuilder,
     private router:Router,
+    private stateService: StateService
  
    
 
@@ -50,6 +52,7 @@ export class AdminDashboardComponent implements OnInit {
       next: result => {
         console.log('departments', result.data.getDepartments);
         this.departments = result.data.getDepartments;
+        this.stateService.setDepartmentsCount(this.departments.length);
       },
       error: error => {
         console.error('Error fetching departments:', error);
@@ -93,6 +96,7 @@ export class AdminDashboardComponent implements OnInit {
     this.departmentService.getUnits(departmentId).subscribe({
       next: result => {
         this.units = result.data.getUnities;
+        this.stateService.setUnitsCount(this.units.length);
         const selectedDepartment = this.departments.find(dept => dept.id === departmentId);
         this.selectedDepartmentName = selectedDepartment?.name || '';
         this.showUnitList = true;
@@ -109,6 +113,7 @@ export class AdminDashboardComponent implements OnInit {
       next: result => {
        
         this.patients = result.data.findPatientsByUnity;
+        this.stateService.setPatientsCount(this.patients.length);
         this.showPatientList = true;
       },
       error: error => {
@@ -121,7 +126,8 @@ export class AdminDashboardComponent implements OnInit {
     this.departmentService.getSbars(patientId).subscribe({
       next: result => {
         console.log("sbar result",result)
-        this.sbars = result.data.findSbarsByPatient
+        this.sbars = result.data.findSbarsByPatient;
+        this.stateService.setSbarsCount(this.sbars.length);
         console.log('SBARs:', this.sbars);
         this.showSbarDetails = true;
       },
