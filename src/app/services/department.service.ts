@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS } from '../graphql.operations';
+import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT } from '../graphql.operations';
 import { CookieService } from 'ngx-cookie-service';
+import { AddPatientInput } from '../interfaces/user.dto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,23 @@ export class DepartmentService {
     }).valueChanges;
   }
 
+  addPatient(createPatientInput: AddPatientInput): Observable<any> {
+    return this.apollo.mutate({
+      mutation: ADD_PATIENT,
+      variables: {
+        createPatientInput
+      },
+      refetchQueries: [
+        {
+          query: GET_PATIENTS_BY_UNITY,
+          variables: { unityId: createPatientInput.unityId }
+        }
+      ],
+      context: {
+        headers: this.getAuthHeaders()
+      },
+    });
+  }
 
   getSbars(patientId: string): Observable<any> {
     return this.apollo.watchQuery({

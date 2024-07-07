@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,8 +21,22 @@ export class AdminDashboardComponent implements OnInit {
   selectedDepartmentName = '';
   selectedUnit: any;
   selectedPatient: any;
+  showAddPatientModal=false
+  submitted:boolean=false;
+  addPatientForm:FormGroup
 
-  constructor(private departmentService: DepartmentService) { }
+  constructor(
+    private departmentService: DepartmentService,
+    private fb:FormBuilder,
+    private cdr: ChangeDetectorRef
+
+  ) {
+    this.addPatientForm=this.fb.group({
+    firstName:['',Validators['required']],
+    lastName:['',Validators['required']],
+
+    })
+   }
 
   ngOnInit(): void {
     this.getDepartments();
@@ -84,8 +101,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   showPatients(unitId: string): void {
+   
     this.departmentService.getPatients(unitId).subscribe({
       next: result => {
+       
         this.patients = result.data.findPatientsByUnity;
         this.showPatientList = true;
       },
@@ -111,9 +130,40 @@ export class AdminDashboardComponent implements OnInit {
 
   selectUnit(unit: any): void {
     this.selectedUnit = unit;
+    console.log("selected unit",this.selectedUnit)
   }
 
   selectPatient(patient: any): void {
     this.selectedPatient = patient;
   }
+
+  addPatient(){
+   this.submitted=true
+   if(this.addPatientForm.valid){
+    const addPatientInput=this.addPatientForm.value
+    addPatientInput.unityId=this.selectedUnit.id
+    this.departmentService.addPatient(addPatientInput).subscribe({
+      next:(result=>{
+         
+        console.log("patients got",result.data.createPatient)
+        const newPatient = result.data.createPatient;
+        this.showAddPatientModal=false
+        this.patients = [...this.patients, newPatient];
+        this.cdr.detectChanges();
+        this.showPatients(this.selectedUnit.id);
+        
+      }),
+      error:(error)=>{
+        throw new Error(error)
+      }
+    })
+   }
+   console.log("form value",this.addPatientForm.value)
+  }
+
+  addSbar(){
+
+  }
+
+
 }

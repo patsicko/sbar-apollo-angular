@@ -104,3 +104,14 @@ query findSbarsByPatient($patientId:Int!){
   
 }
 `
+
+export const ADD_PATIENT = gql`
+
+mutation createPatient($createPatientInput:CreatePatientInput!){
+  createPatient(createPatientInput:$createPatientInput){
+    id
+    firstName
+    lastName
+  }
+}
+`

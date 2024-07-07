@@ -13,3 +13,9 @@ export interface CreateHospitalInput {
     sector: string
     
   } 
+
+  export interface AddPatientInput{
+    firstName: string,
+    lastName: string,
+    unityId:number
+  }

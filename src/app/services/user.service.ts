@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { CREATE_HOSPITAL, CREATE_USER, GET_USERS, LOGIN } from '../graphql.operations';
-import { CreateHospitalInput, LoginInput } from '../interfaces/user.dto';
+import { ADD_PATIENT, CREATE_HOSPITAL, CREATE_USER, GET_PATIENTS_BY_UNITY, GET_USERS, LOGIN } from '../graphql.operations';
+import { AddPatientInput, CreateHospitalInput, LoginInput } from '../interfaces/user.dto';
 import { CookieService } from 'ngx-cookie-service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,8 @@ export class UserService {
       ]
     })
   }
+
+ 
 
   login(loginInput:LoginInput):Observable<any>{
    return this.apollo.mutate({

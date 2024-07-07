@@ -16,6 +16,7 @@
 
   <!-- Main content -->
   <main class="flex-1 p-10 bg-gray-100 overflow-y-auto relative" (mouseleave)="hideModels()">
+   
     <router-outlet></router-outlet>
 
     <!-- Departments Modal -->
@@ -32,7 +33,7 @@
     <div *ngIf="showUnitList" (mouseenter)="keepUnitsVisible()" class="absolute bg-[#317eb4] text-[#cbd5e0] font-bold shadow-lg rounded-lg p-6 w-80 top-5 left-[352px] mt-20 z-10">
       <h3 class="text-xl font-semibold mb-4">Units of {{ selectedDepartmentName }}</h3>
       <ul>
-        <li *ngFor="let unit of units" (mouseenter)="showPatients(unit.id); selectUnit(unit.name)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+        <li *ngFor="let unit of units" (mouseenter)="showPatients(unit.id); selectUnit(unit)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
           {{ unit.name }}
         </li>
       </ul>
@@ -40,8 +41,9 @@
 
   
     <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-[380px] top-5 left-[624px] mt-20 z-10">
-      <h3 class="text-xl font-semibold mb-4">Patients in {{ selectedUnit }}</h3>
-      <table class="min-w-full bg-[#206598] text-[#cbd5e0]">
+      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showAddPatientModal=true">Add  Patient</button>
+      <h3 class="text-xl font-semibold mb-4">Patients in {{ selectedUnit.name }}</h3>
+      <table class="min-w-full bg-[#206598] text-[#cbd5e0] ">
         <thead>
           <tr>
             <th class="py-2 px-4 border-b">ID</th>
@@ -49,7 +51,7 @@
             <th class="py-2 px-4 border-b">Last Name</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody >
           <tr *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
             <td class="py-2 px-4 border-b">{{patient.id}}</td>
             <td class="py-2 px-4 border-b">{{ patient.firstName }}</td>
@@ -62,6 +64,7 @@
     <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
+      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="addSbar()">Add  SBAR</button>
       <table *ngIf="sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
@@ -88,5 +91,39 @@
       </table>
       <p *ngIf="!sbars || sbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
     </div>
+
+
+    <div *ngIf="showAddPatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+      <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <div class="flex justify-between items-center">
+          <h2 class="text-3xl font-bold text-white mb-6">Add Patient in {{selectedUnit.name}}</h2>
+          <span class="material-icons cursor-pointer font-bold " (click)="showAddPatientModal=false">
+            close
+            </span>
+        </div>
+       
+        <form [formGroup]="addPatientForm" (ngSubmit)="addPatient()">
+          <div class="mb-4">
+            <label for="firstName" class="block text-white  font-bold mb-2">First Name</label>
+            <input formControlName="firstName" type="text" id="firstName" class="w-full p-2 border rounded outline-none text-black" />
+            <div *ngIf="addPatientForm.get('firstName')?.hasError('required') && (addPatientForm.get('firstName')?.touched || submitted)  " class="text-red-700">First name is required</div>
+          </div>
+          <div class="mb-4">
+            <label for="lastName" class="block text-white font-bold mb-2">Last Name</label>
+            <input formControlName="lastName" type="text" id="lastName" class="w-full p-2 border rounded outline-none text-black"  />
+            <div *ngIf="addPatientForm.get('lastName')?.hasError('required') && (addPatientForm.get('lastName')?.touched || submitted ) " class="text-red-700">Lats name is required</div>
+          </div>
+         
+          <div class="mb-4">
+            <label for="unit" class="block text-white font-bold mb-2">Unit</label>
+            <input type="text" id="unit" class="w-full p-2 border rounded outline-none text-black" value="{{selectedUnit.name}} " readonly/>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit" class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded">Add Patient</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </main>
 </div>
