@@ -31,7 +31,7 @@ export class DepartmentService {
     }).valueChanges;
   }
 
-  getUnits(departmentId: string): Observable<any> {
+  getUnits(departmentId: number): Observable<any> {
     return this.apollo.watchQuery({
       query: GET_UNITS,
       variables: { departmentId },
@@ -41,10 +41,10 @@ export class DepartmentService {
     }).valueChanges;
   }
 
-  getPatients(unitId: string): Observable<any> {
+  getPatients(unityId: number): Observable<any> {
     return this.apollo.watchQuery({
       query: GET_PATIENTS_BY_UNITY,
-      variables: { unitId },
+      variables: { unityId },
       context: {
         headers: this.getAuthHeaders()
       }
@@ -69,7 +69,7 @@ export class DepartmentService {
     });
   }
 
-  getSbars(patientId: string): Observable<any> {
+  getSbars(patientId: number): Observable<any> {
     return this.apollo.watchQuery({
       query: GET_SBARS,
       variables: { patientId },

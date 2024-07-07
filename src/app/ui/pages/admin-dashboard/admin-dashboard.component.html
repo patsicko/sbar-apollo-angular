@@ -43,7 +43,8 @@
     <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-[380px] top-5 left-[624px] mt-20 z-10">
       <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showAddPatientModal=true">Add  Patient</button>
       <h3 class="text-xl font-semibold mb-4">Patients in {{ selectedUnit.name }}</h3>
-      <table class="min-w-full bg-[#206598] text-[#cbd5e0] ">
+      <div class="h-60 overflow-y-scroll">
+      <table class="min-w-40 bg-[#206598] text-[#cbd5e0] ">
         <thead>
           <tr>
             <th class="py-2 px-4 border-b">ID</th>
@@ -59,6 +60,7 @@
           </tr>
         </tbody>
       </table>
+    </div>
     </div>
 
     <!-- SBAR Details Modal -->

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
-import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -28,7 +29,9 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private departmentService: DepartmentService,
     private fb:FormBuilder,
-    private cdr: ChangeDetectorRef
+    private router:Router,
+ 
+   
 
   ) {
     this.addPatientForm=this.fb.group({
@@ -86,7 +89,7 @@ export class AdminDashboardComponent implements OnInit {
     this.showSbarDetails = true;
   }
 
-  showUnits(departmentId: string): void {
+  showUnits(departmentId: number): void {
     this.departmentService.getUnits(departmentId).subscribe({
       next: result => {
         this.units = result.data.getUnities;
@@ -100,9 +103,9 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  showPatients(unitId: string): void {
+  showPatients(unityId: number): void {
    
-    this.departmentService.getPatients(unitId).subscribe({
+    this.departmentService.getPatients(unityId).subscribe({
       next: result => {
        
         this.patients = result.data.findPatientsByUnity;
@@ -114,7 +117,7 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  showSbars(patientId: string): void {
+  showSbars(patientId: number): void {
     this.departmentService.getSbars(patientId).subscribe({
       next: result => {
         console.log("sbar result",result)
@@ -137,21 +140,18 @@ export class AdminDashboardComponent implements OnInit {
     this.selectedPatient = patient;
   }
 
-  addPatient(){
+   addPatient(){
    this.submitted=true
    if(this.addPatientForm.valid){
     const addPatientInput=this.addPatientForm.value
     addPatientInput.unityId=this.selectedUnit.id
     this.departmentService.addPatient(addPatientInput).subscribe({
-      next:(result=>{
-         
-        console.log("patients got",result.data.createPatient)
-        const newPatient = result.data.createPatient;
-        this.showAddPatientModal=false
-        this.patients = [...this.patients, newPatient];
-        this.cdr.detectChanges();
-        this.showPatients(this.selectedUnit.id);
-        
+      next:(async result=>{
+          if(result){
+            this.showAddPatientModal = false;
+            this.showPatients(this.selectedUnit.id)
+            console.log("patients that should be displayed",this.showPatients(this.selectedUnit.id))
+          }
       }),
       error:(error)=>{
         throw new Error(error)

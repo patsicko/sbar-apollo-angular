@@ -76,8 +76,8 @@ export const GET_UNITS = gql`
 `;
 
 export const GET_PATIENTS_BY_UNITY = gql`
-  query findPatientsByUnity($unitId:Int!){
-  findPatientsByUnity(unitId:$unitId){
+  query findPatientsByUnity($unityId:Int!){
+  findPatientsByUnity(unityId:$unityId){
     id
     firstName
     lastName
