@@ -26,6 +26,8 @@ export class AdminDashboardComponent implements OnInit {
   showAddPatientModal=false
   submitted:boolean=false;
   addPatientForm:FormGroup
+  createSbarForm:FormGroup
+  showCreateSbarForm:boolean=false
 
   constructor(
     private departmentService: DepartmentService,
@@ -36,11 +38,18 @@ export class AdminDashboardComponent implements OnInit {
    
 
   ) {
+    this.createSbarForm =this.fb.group({
+      situation:['',Validators['required']],
+      background:['',Validators['required']],
+      assessment:['',Validators['required']],
+      recommendation:['',Validators['required']]
+    }),
     this.addPatientForm=this.fb.group({
     firstName:['',Validators['required']],
     lastName:['',Validators['required']],
 
     })
+   
    }
 
   ngOnInit(): void {
@@ -168,8 +177,22 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   addSbar(){
-
+    this.submitted=true
+    if(this.createSbarForm.valid){
+      const sbarInput=this.createSbarForm.value
+      sbarInput.patientId=this.selectedPatient.id
+    
+      this.departmentService.createSbar(sbarInput).subscribe({
+        next:(result=>{
+          console.log(" add sbar result",result)
+          this.showCreateSbarForm=false
+          this.showSbars(this.selectedPatient.id)
+        }),
+        error:(error=>{
+          throw new Error(error)
+        })
+      })
+    }
+   
   }
-
-
 }

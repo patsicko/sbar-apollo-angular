@@ -115,3 +115,22 @@ mutation createPatient($createPatientInput:CreatePatientInput!){
   }
 }
 `
+
+export const CREATE_SBAR = gql`
+mutation createSbar($createSbarInput:CreateSbarInput!){
+  createSbar(createSbarInput:$createSbarInput){
+    id
+    situation
+    background
+    assessment
+    recommendation
+    createdBy{
+      id
+      firstName
+      lastName
+      role
+      
+    }
+  }
+}
+`

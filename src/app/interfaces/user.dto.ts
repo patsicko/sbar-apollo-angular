@@ -19,3 +19,11 @@ export interface CreateHospitalInput {
     lastName: string,
     unityId:number
   }
+
+  export interface CreateSbarInput {
+  patientId:number,
+  situation:string,
+  background:string,
+  assessment:string,
+  recommendation:string
+  }

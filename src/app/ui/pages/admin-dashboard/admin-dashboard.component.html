@@ -66,7 +66,7 @@
     <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
-      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="addSbar()">Add  SBAR</button>
+      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showCreateSbarForm=true">Add  SBAR</button>
       <table *ngIf="sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
@@ -92,6 +92,7 @@
         </tbody>
       </table>
       <p *ngIf="!sbars || sbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
+      
     </div>
 
 
@@ -127,5 +128,42 @@
       </div>
     </div>
 
+
+    <div *ngIf="showCreateSbarForm" class="fixed inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center z-30">
+      <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-2/3 ml-28 mt-6">
+        <h2 class="text-xl font-semibold mb-6">Add SBAR to {{selectedPatient.lastName}}</h2>
+        <form [formGroup]="createSbarForm" (ngSubmit)="addSbar()">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="mb-4">
+              <label class="block mb-2 text-lg font-medium" for="situation">Situation</label>
+              <textarea formControlName="situation" id="situation" class="w-full h-32 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg"></textarea>
+              <span *ngIf="createSbarForm.get('situation')?.hasError('required') && (createSbarForm.get('situation')?.touched || submitted)" class="text-lg text-red-700">Situation is required</span>
+            </div>
+            <div class="mb-4">
+              <label class="block mb-2 text-lg font-medium" for="background">Background</label>
+              <textarea formControlName="background" id="background" class="w-full h-32 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg"></textarea>
+              <span *ngIf="createSbarForm.get('background')?.hasError('required') && (createSbarForm.get('background')?.touched || submitted)" class="text-lg text-red-700">Background is required</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="mb-4">
+              <label class="block mb-2 text-lg font-medium" for="assessment">Assessment</label>
+              <textarea formControlName="assessment" id="assessment" class="w-full h-32 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg"></textarea>
+              <span *ngIf="createSbarForm.get('assessment')?.hasError('required') && (createSbarForm.get('assessment')?.touched || submitted)" class="text-lg text-red-700">Assessment is required</span>
+            </div>
+            <div class="mb-4">
+              <label class="block mb-2 text-lg font-medium" for="recommendation">Recommendation</label>
+              <textarea formControlName="recommendation" id="recommendation" class="w-full h-32 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg"></textarea>
+              <span *ngIf="createSbarForm.get('recommendation')?.hasError('required') && (createSbarForm.get('recommendation')?.touched || submitted)" class="text-lg text-red-700">Recommendation ios required</span>
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2">Save</button>
+            <button type="button" class="bg-gray-600 text-white px-4 py-2 rounded-lg" (click)="showCreateSbarForm=false">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
   </main>
 </div>

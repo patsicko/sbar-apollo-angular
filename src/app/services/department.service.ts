@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT } from '../graphql.operations';
+import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR } from '../graphql.operations';
 import { CookieService } from 'ngx-cookie-service';
-import { AddPatientInput } from '../interfaces/user.dto';
+import { AddPatientInput, CreateSbarInput } from '../interfaces/user.dto';
 
 
 @Injectable({
@@ -67,6 +67,27 @@ export class DepartmentService {
         headers: this.getAuthHeaders()
       },
     });
+  }
+
+  createSbar(createSbarInput:CreateSbarInput):Observable<any>{
+   return this.apollo.mutate({
+    mutation:CREATE_SBAR,
+    variables:{
+      createSbarInput
+    },
+    context:{
+      headers:this.getAuthHeaders()
+    },
+    refetchQueries:[
+      {
+        query:GET_SBARS,
+        variables:{
+          patientId:createSbarInput.patientId
+        }
+      }
+    ]
+
+   })
   }
 
   getSbars(patientId: number): Observable<any> {
