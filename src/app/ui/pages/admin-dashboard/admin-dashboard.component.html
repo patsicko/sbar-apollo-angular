@@ -72,9 +72,13 @@
     <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
+      <div class="flex gap-4  items-start justify-start ">
+     
+        <button type="button" (click)="showCreateSbarForm=true" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Add sbar</button>
+        <button type="button" (click)="filtering=false" class="bg-blue-600 text-white px-4 py-2 rounded-lg">All sbars</button>
+        </div>
       <div class="flex gap-4">
-      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showCreateSbarForm=true">Add  SBAR</button>
-      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="filtering=false">All SBAR</button>
+     
       <div class="p-6">
         <h2 class="text-2xl font-semibold mb-4">Filter SBARs</h2>
         <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
