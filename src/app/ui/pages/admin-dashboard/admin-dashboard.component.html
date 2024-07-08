@@ -5,17 +5,23 @@
       <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
       <hr class="my-8">
       <nav class="space-y-2">
+        <a  (click)="hideModels()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
+          <span class="material-icons mr-3">business</span>
+          Overview
+        </a>
         <a (mouseenter)="showDepartments()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
           <span class="material-icons mr-3">business</span>
           Departments
         </a>
+
+       
         <!-- Other sidebar links -->
       </nav>
     </div>
   </aside>
 
   <!-- Main content -->
-  <main class="flex-1 p-10 bg-gray-100 overflow-y-auto relative" (mouseleave)="hideModels()">
+  <main class="flex-1 p-10 bg-gray-100 overflow-y-auto relative" >
    
     <router-outlet ></router-outlet>
 
@@ -66,8 +72,36 @@
     <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
+      <div class="flex gap-4">
       <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showCreateSbarForm=true">Add  SBAR</button>
-      <table *ngIf="sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
+      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="filtering=false">All SBAR</button>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold mb-4">Filter SBARs</h2>
+        <form [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-1">
+              <label for="id" class="block text-gray-700">ID</label>
+              <input type="number" autocomplete="off" id="id" formControlName="id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg">
+            </div>
+            <div class="col-span-1">
+              <label for="date" class="block text-gray-700">Date</label>
+              <input type="date" id="date" formControlName="date" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg">
+            </div>
+            <div class="col-span-1">
+              <label for="createdBy" class="block text-gray-700">Created By</label>
+              <input type="text" id="createdBy" formControlName="createdBy" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black text-lg">
+            </div>
+          </div>
+          <div class="mt-4">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Apply Filter</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    
+  
+      <table *ngIf="!filtering && sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
             <th class="py-2 px-4 border-b">Id</th>
@@ -92,8 +126,36 @@
         </tbody>
       </table>
       <p *ngIf="!sbars || sbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
+
+
+      <table *ngIf="filteredSbars && filteredSbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Id</th>
+            <th class="py-2 px-4 border-b">Situation</th>
+            <th class="py-2 px-4 border-b">Background</th>
+            <th class="py-2 px-4 border-b">Assessment</th>
+            <th class="py-2 px-4 border-b">Recommendation</th>
+            <th class="py-2 px-4 border-b">Created by</th>
+            <th class="py-2 px-4 border-b">Created at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sbar of filteredSbars">
+            <td class="py-2 px-4 border-b">{{ sbar.id }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.situation }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.background }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.assessment }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.recommendation }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
+            <td class="py-2 px-4 border-b">{{ sbar.createdAt }} </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="!filteredSbars && !sbars || filteredSbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
       
     </div>
+
 
 
     <div *ngIf="showAddPatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
@@ -165,5 +227,8 @@
       </div>
     </div>
     
+
+    
+
   </main>
 </div>

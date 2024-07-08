@@ -20,6 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   units: any[] = [];
   patients: any[] = [];
   sbars: any[] = [];
+  filteredSbars:any[]=[]
   selectedDepartmentName = '';
   selectedUnit: any;
   selectedPatient: any;
@@ -28,6 +29,8 @@ export class AdminDashboardComponent implements OnInit {
   addPatientForm:FormGroup
   createSbarForm:FormGroup
   showCreateSbarForm:boolean=false
+  filterForm: FormGroup;
+  filtering:boolean=false
 
   constructor(
     private departmentService: DepartmentService,
@@ -48,7 +51,12 @@ export class AdminDashboardComponent implements OnInit {
     firstName:['',Validators['required']],
     lastName:['',Validators['required']],
 
-    })
+    }),
+    this.filterForm = this.fb.group({
+      id: [''],
+      date: [''],
+      createdBy: ['']
+    });
    
    }
 
@@ -195,4 +203,42 @@ export class AdminDashboardComponent implements OnInit {
     }
    
   }
+
+
+
+  applyFilter() {
+    this.filtering=true
+    const filterValue = this.filterForm.value;
+
+    let filteredSbars = [...this.sbars];
+  
+    if (filterValue.id) {
+      filteredSbars = filteredSbars.filter(sbar => sbar.id === filterValue.id);
+    }
+    if (filterValue.date) {
+     
+      const filterDate = new Date(filterValue.date).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'numeric', day: 'numeric'
+      });
+  
+      filteredSbars = filteredSbars.filter(sbar => {
+      
+        const createdAtDate = new Date(sbar.createdAt).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'numeric', day: 'numeric'
+        });
+      
+        return createdAtDate === filterDate;
+      });
+    }
+    if (filterValue.createdBy) {
+      filteredSbars = filteredSbars.filter(sbar => sbar.createdBy?.lastName === filterValue.createdBy);
+    }
+  
+  
+    this.filteredSbars = filteredSbars;
+    this.filterForm.reset()
+   
+  
+  }
+  
 }
