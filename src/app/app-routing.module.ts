@@ -12,6 +12,7 @@ import { PatientsComponent } from './ui/pages/patients/patients.component';
 import { OverviewComponent } from './ui/pages/overview/overview.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ForbidenComponent } from './ui/pages/forbiden/forbiden.component';
+import { NotFoundComponent } from './ui/pages/not-found/not-found.component';
 
 const routes: Routes = [
  
@@ -33,7 +34,8 @@ const routes: Routes = [
     {path:'patients',component:PatientsComponent}
     // Add other child routes here
   ]
-}
+},
+{ path: '**', component: NotFoundComponent }
 
 
 ];

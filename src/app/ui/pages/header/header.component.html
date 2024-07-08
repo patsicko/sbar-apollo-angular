@@ -1,9 +1,15 @@
-
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-[#4fd1c5]">SBAR Healthcare</h1>
-      <nav>
-        <a routerLink="/home" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Home</a>
-        <a routerLink="/login" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Login</a>
-      </nav>
-    </div>
- 
+<div class="container mx-auto flex justify-between items-center">
+  <h1 class="text-3xl font-bold text-[#4fd1c5]">SBAR Healthcare</h1>
+  <nav>
+    <a routerLink="/home" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Home</a>
+    <ng-container *ngIf="isLoggedIn; else loggedOut">
+      <a routerLink="/dashboard/admin" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Dashboard</a>
+      <a routerLink="/profile" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Profile</a>
+      <a routerLink="/notifications" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Notifications</a>
+      <a (click)="logout()" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md cursor-pointer">Logout</a>
+    </ng-container>
+    <ng-template #loggedOut>
+      <a routerLink="/login" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Login</a>
+    </ng-template>
+  </nav>
+</div>

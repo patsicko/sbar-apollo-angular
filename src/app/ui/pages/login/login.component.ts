@@ -1,10 +1,9 @@
+// login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { jwtDecode } from "jwt-decode";
-
+import { AuthService } from 'src/app/services/auth.service'; // Adjust the import path as necessary
 
 @Component({
   selector: 'app-login',
@@ -12,14 +11,14 @@ import { jwtDecode } from "jwt-decode";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup ;
-  submitted:boolean=false;
+  loginForm: FormGroup;
+  submitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private userService:UserService,
-    private router:Router,
-    private cookieService:CookieService
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -27,38 +26,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    this.submitted=true
-    const loginInput=this.loginForm.value
+    this.submitted = true;
     if (this.loginForm.valid) {
-      this.submitted=true
-      const formdata=this.loginForm.value
-      console.log('Form Submitted', formdata);
-      
-      this.userService.login(formdata).subscribe({
-        next:(data=>{
-          console.log("token",data);
-          const tokenFromCookie=this.cookieService.get('accessToken');
-          console.log("token from cookie",tokenFromCookie)
-          const decodedToken: any = jwtDecode(tokenFromCookie);
-          console.log("decoded token", decodedToken);
-          if(decodedToken.role==='admin'){
-            this.router.navigate(['/dashboard/admin'])
-          }else if(decodedToken.role==='superAdmin'){
-            this.router.navigate(['/dashboard/admin'])
-          }
-        
-        }),
-        error:(err=>{
-          console.log(err.message)
-        })
-      })
-      // Handle the form submission logic here
-   
+      const formData = this.loginForm.value;
+      this.userService.login(formData).subscribe({
+        next: (data) => {
+          // Assuming the backend sets the token in the cookie
+          this.authService.checkLoginStatus(); // Update the login status
+          this.router.navigate(['/dashboard/admin']); // Navigate to the dashboard
+        },
+        error: (err) => {
+          console.log(err.message);
+        }
+      });
     }
   }
 }

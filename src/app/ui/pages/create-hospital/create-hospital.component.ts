@@ -43,7 +43,7 @@ export class CreateHospitalComponent implements OnInit {
           throw Error(error)
         })
       })
-      // Handle the form submission logic here
+      
     }
   }
 }
