@@ -134,3 +134,27 @@ mutation createSbar($createSbarInput:CreateSbarInput!){
   }
 }
 `
+
+export const TRANSFER_PATIENT = gql `
+ mutation transferPatient($transferPatientInput:TransferPatientInput!){
+  transferPatient(transferPatientInput:$transferPatientInput){
+    id
+    firstName
+    lastName
+    unity{
+      name
+      id
+    }
+  }
+}
+
+`
+
+export const ADD_DEPARTMENT=gql`
+mutation($createDepartmentInput:CreateDepartmentInput!){
+  createDepartment(createDepartmentInput:$createDepartmentInput){
+    id
+    name
+  }
+}
+`

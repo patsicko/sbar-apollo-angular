@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +15,9 @@ export class CreateHospitalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService:UserService
+    private userService:UserService,
+    private toastr: ToastrService,
+    private router:Router
 
   ) {
     this.hospitalForm = this.fb.group({
@@ -37,9 +41,13 @@ export class CreateHospitalComponent implements OnInit {
       const createHospitalInput=this.hospitalForm.value
       this.userService.createHospital(createHospitalInput).subscribe({
         next:(data=>{
-          console.log("hospital created",data)
+         if(data){
+          this.toastr.success('Hospital created successfully')
+          this.router.navigate(['/login']);
+         }
         }),
         error:(error=>{
+          this.toastr.error(error.message)
           throw Error(error)
         })
       })

@@ -27,3 +27,13 @@ export interface CreateHospitalInput {
   assessment:string,
   recommendation:string
   }
+
+  export interface TransferPatientInput{
+    patientId: number
+    currentUnityId: number
+    targetUnityId: number
+  }
+
+  export interface CreateDepartmentInput{
+    name:string
+  }

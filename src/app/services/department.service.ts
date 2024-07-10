@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR } from '../graphql.operations';
+import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR, TRANSFER_PATIENT, ADD_DEPARTMENT } from '../graphql.operations';
 import { CookieService } from 'ngx-cookie-service';
-import { AddPatientInput, CreateSbarInput } from '../interfaces/user.dto';
+import { AddPatientInput, CreateDepartmentInput, CreateSbarInput, TransferPatientInput } from '../interfaces/user.dto';
 
 
 @Injectable({
@@ -69,6 +69,16 @@ export class DepartmentService {
     });
   }
 
+  transferPatient(transferPatientInput:TransferPatientInput):Observable<any>{
+    return this.apollo.mutate({
+      mutation:TRANSFER_PATIENT,
+      variables:{
+        transferPatientInput
+      }
+    })
+  }
+
+
   createSbar(createSbarInput:CreateSbarInput):Observable<any>{
    return this.apollo.mutate({
     mutation:CREATE_SBAR,
@@ -98,5 +108,26 @@ export class DepartmentService {
         headers: this.getAuthHeaders()
       }
     }).valueChanges;
+  }
+
+  addDepartment(createDepartmentInput:CreateDepartmentInput):Observable<any>{
+    return this.apollo.mutate({
+      mutation:ADD_DEPARTMENT,
+      variables:{
+        createDepartmentInput
+      },
+     
+      refetchQueries: [
+        {
+          query: GET_DEPARTMENTS,
+          context:{
+            headers:this.getAuthHeaders()
+          }, 
+        }
+      ],
+      context:{
+        headers:this.getAuthHeaders()
+      },
+    })
   }
 }

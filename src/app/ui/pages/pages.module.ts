@@ -18,6 +18,8 @@ import { ForbidenComponent } from './forbiden/forbiden.component';
 
 
 
+
+
 @NgModule({
   declarations: [
     HomepageComponent,
@@ -40,7 +42,9 @@ import { ForbidenComponent } from './forbiden/forbiden.component';
     ReactiveFormsModule,
     AppRoutingModule,
     
+    
   ],
+
   exports:[
     HomepageComponent,
   

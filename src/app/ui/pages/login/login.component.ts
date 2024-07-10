@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service'; // Adjust the import path as necessary
+import { AuthService } from 'src/app/services/auth.service'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -29,16 +31,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
+   
     this.submitted = true;
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
       this.userService.login(formData).subscribe({
         next: (data) => {
-          // Assuming the backend sets the token in the cookie
-          this.authService.checkLoginStatus(); // Update the login status
-          this.router.navigate(['/dashboard/admin']); // Navigate to the dashboard
+           if(data){
+            this.toastr.success('login successfull')
+           }
+          this.authService.checkLoginStatus();
+          this.router.navigate(['/dashboard/admin']);
+         
+         
         },
         error: (err) => {
+          this.toastr.error(err.message);
           console.log(err.message);
         }
       });

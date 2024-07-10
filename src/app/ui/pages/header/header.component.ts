@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service'; 
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +12,14 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+   
+  ) {}
 
   ngOnInit(): void {
+   
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;
     });

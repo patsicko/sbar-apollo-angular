@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Router } from '@angular/router';
 import { StateService } from 'src/app/services/state.service';
+import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 
 
@@ -25,9 +27,11 @@ export class AdminDashboardComponent implements OnInit {
   selectedUnit: any;
   selectedPatient: any;
   showAddPatientModal=false
+  showAddDepartmentModal=false
   submitted:boolean=false;
   addPatientForm:FormGroup
   createSbarForm:FormGroup
+  addDepartmentForm:FormGroup
   showCreateSbarForm:boolean=false
   filterForm: FormGroup;
   filtering:boolean=false
@@ -36,7 +40,8 @@ export class AdminDashboardComponent implements OnInit {
     private departmentService: DepartmentService,
     private fb:FormBuilder,
     private router:Router,
-    private stateService: StateService
+    private stateService: StateService,
+    private toastr: ToastrService
  
    
 
@@ -56,7 +61,10 @@ export class AdminDashboardComponent implements OnInit {
       id: [''],
       date: [''],
       createdBy: ['']
-    });
+    }),
+    this.addDepartmentForm=this.fb.group({
+      name:['',Validators['required']]
+    })
    
    }
 
@@ -64,18 +72,7 @@ export class AdminDashboardComponent implements OnInit {
     this.getDepartments();
   }
 
-  getDepartments(): void {
-    this.departmentService.getDepartments().subscribe({
-      next: result => {
-        console.log('departments', result.data.getDepartments);
-        this.departments = result.data.getDepartments;
-        this.stateService.setDepartmentsCount(this.departments.length);
-      },
-      error: error => {
-        console.error('Error fetching departments:', error);
-      }
-    });
-  }
+ 
 
   showDepartments(): void {
     this.showDepartmentList = true;
@@ -173,15 +170,16 @@ export class AdminDashboardComponent implements OnInit {
           if(result){
             this.showAddPatientModal = false;
             this.showPatients(this.selectedUnit.id)
-            console.log("patients that should be displayed",this.showPatients(this.selectedUnit.id))
+            this.toastr.success('patient added successfully')
           }
       }),
       error:(error)=>{
+        this.toastr.error(error.message)
         throw new Error(error)
       }
     })
    }
-   console.log("form value",this.addPatientForm.value)
+  
   }
 
   addSbar(){
@@ -192,11 +190,13 @@ export class AdminDashboardComponent implements OnInit {
     
       this.departmentService.createSbar(sbarInput).subscribe({
         next:(result=>{
-          console.log(" add sbar result",result)
+         
           this.showCreateSbarForm=false
-          this.showSbars(this.selectedPatient.id)
+          this.showSbars(this.selectedPatient.id);
+          this.toastr.success('Sbar aded successfully')
         }),
         error:(error=>{
+          this.toastr.error(error.message)
           throw new Error(error)
         })
       })
@@ -234,11 +234,50 @@ export class AdminDashboardComponent implements OnInit {
       filteredSbars = filteredSbars.filter(sbar => sbar.createdBy?.lastName === filterValue.createdBy);
     }
   
-  
     this.filteredSbars = filteredSbars;
     this.filterForm.reset()
    
   
+  }
+
+  transferPatient(){
+    
+  }
+
+   addDepartment(){
+    if(this.addDepartmentForm.valid){
+      const departmentData=this.addDepartmentForm.value
+      this.departmentService.addDepartment(departmentData).subscribe({
+        next:result=>{
+         
+          this.showAddDepartmentModal=false
+          if(result){
+         
+          this.showDepartmentList=true
+          }
+         
+        },
+        
+        error:error=>{
+          this.toastr.error(error.message)
+        }
+      })
+    }
+  }
+
+  getDepartments(): void {
+    this.departmentService.getDepartments().subscribe({
+      next: result => {
+        
+        this.departments = result.data.getDepartments;
+       
+        this.stateService.setDepartmentsCount(this.departments.length);
+      },
+      error: error => {
+        this.toastr.error(error.message)
+        throw new Error(error.message)
+      }
+    });
   }
   
 }
