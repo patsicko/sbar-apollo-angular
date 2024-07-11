@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from 'jwt-decode'; // Import jwtDecode correctly
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard{
+export class AuthGuard {
   constructor(private router: Router, private cookieService: CookieService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -14,9 +14,9 @@ export class AuthGuard{
     if (token) {
       const decodedToken: any = jwtDecode(token);
       const userRole = decodedToken.role;
-      const requiredRole = route.data['role'];
+      const requiredRoles = route.data['roles'] as Array<string>;
 
-      if (userRole === requiredRole) {
+      if (requiredRoles.includes(userRole)) {
         return true;
       } else {
         this.router.navigate(['/forbidden']);

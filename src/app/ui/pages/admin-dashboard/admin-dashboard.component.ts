@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { StateService } from 'src/app/services/state.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -39,13 +40,16 @@ export class AdminDashboardComponent implements OnInit {
   showCreateSbarForm:boolean=false
   filterForm: FormGroup;
   filtering:boolean=false
+  currentUser: any = null;
+  isAdmin:boolean=false
 
   constructor(
     private departmentService: DepartmentService,
     private fb:FormBuilder,
     private router:Router,
     private stateService: StateService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
  
    
 
@@ -76,6 +80,13 @@ export class AdminDashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      if(this.currentUser.role==='admin'){
+        this.isAdmin=true
+      }
+     console.log("currentUser",this.currentUser)
+    });
     this.getDepartments();
   }
 
