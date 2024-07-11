@@ -36,6 +36,7 @@ export class CreateHospitalComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.submitted=true
     if (this.hospitalForm.valid) {
       console.log('Form Submitted', this.hospitalForm.value);
       const createHospitalInput=this.hospitalForm.value
