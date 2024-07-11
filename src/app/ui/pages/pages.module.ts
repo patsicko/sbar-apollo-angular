@@ -15,6 +15,7 @@ import { PatientsComponent } from './patients/patients.component';
 import { OverviewComponent } from './overview/overview.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbidenComponent } from './forbiden/forbiden.component';
+import { CreateStaffComponent } from './create-staff/create-staff.component';
 
 
 
@@ -33,6 +34,7 @@ import { ForbidenComponent } from './forbiden/forbiden.component';
     OverviewComponent,
     NotFoundComponent,
     ForbidenComponent,
+    CreateStaffComponent,
    
    
   ],

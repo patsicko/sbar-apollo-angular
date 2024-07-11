@@ -13,6 +13,7 @@ import { OverviewComponent } from './ui/pages/overview/overview.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ForbidenComponent } from './ui/pages/forbiden/forbiden.component';
 import { NotFoundComponent } from './ui/pages/not-found/not-found.component';
+import { CreateStaffComponent } from './ui/pages/create-staff/create-staff.component';
 
 const routes: Routes = [
  
@@ -20,12 +21,13 @@ const routes: Routes = [
 { path: 'home', component: HomepageComponent },
 {path:'login',component:LoginComponent},
 {path:'create/hospital',component:CreateHospitalComponent},
+{path:'create/staff',component:CreateStaffComponent},
 {path:'forbidden',component:ForbidenComponent},
 {
   path: 'dashboard/admin',
   component: AdminDashboardComponent,
   canActivate: [AuthGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ['admin','nurse'] },
   children: [
     { path: '', component: OverviewComponent },
     { path: 'departments', component: DepartmentsComponent },

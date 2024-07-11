@@ -1,0 +1,91 @@
+<div class="container mx-auto flex flex-col items-center justify-center py-10">
+    <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-full max-w-2xl">
+      <h2 class="text-2xl font-semibold text-center mb-6 text-[#4fd1c5]">Join Hospital</h2>
+      <form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="firstName">First Name</label>
+            <input
+              formControlName="firstName"
+              id="firstName"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="staffForm.get('firstName')?.hasError('required') && (staffForm.get('firstName')?.touched || submitted)"
+              class="text-red-500">First Name is required</div>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="lastName">Last Name</label>
+            <input
+              formControlName="lastName"
+              id="lastName"
+              type="text"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="staffForm.get('lastName')?.hasError('required') && (staffForm.get('lastName')?.touched || submitted)"
+              class="text-red-500">Last Name is required</div>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="email">Email</label>
+            <input
+              formControlName="email"
+              id="email"
+              type="email"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="staffForm.get('email')?.hasError('required') && (staffForm.get('email')?.touched || submitted)"
+              class="text-red-500">Email is required</div>
+            <div *ngIf="staffForm.get('email')?.hasError('email') && (staffForm.get('email')?.touched || submitted)"
+              class="text-red-500 text-xs">Please enter a valid email address</div>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="password">Password</label>
+            <input
+              formControlName="password"
+              id="password"
+              type="password"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="staffForm.get('password')?.hasError('required') && (staffForm.get('password')?.touched || submitted)"
+              class="text-red-500">Password is required</div>
+            <div *ngIf="staffForm.get('password')?.hasError('minlength') && (staffForm.get('password')?.touched || submitted)"
+              class="text-red-500 text-xs">Password must be at least 8 characters long</div>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="role">Role</label>
+            <select
+              formControlName="role"
+              id="role"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            >
+              <option *ngFor="let role of availableRoles" [value]="role">{{ role }}</option>
+            </select>
+            <div *ngIf="staffForm.get('role')?.hasError('required') && (staffForm.get('role')?.touched || submitted)"
+              class="text-red-500">Role is required</div>
+          </div>
+          <div class="col-span-1">
+            <label class="block text-[#cbd5e0] mb-2" for="hospitalId">Hospital ID</label>
+            <input
+              formControlName="hospitalId"
+              id="hospitalId"
+              type="number"
+              class="w-full px-4 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
+            />
+            <div *ngIf="staffForm.get('hospitalId')?.hasError('required') && (staffForm.get('hospitalId')?.touched || submitted)"
+              class="text-red-500">Hospital ID is required</div>
+          </div>
+        </div>
+  
+        <button type="submit"
+          class="w-full bg-[#4fd1c5] hover:bg-[#38a89d] text-white font-semibold py-2 rounded-md" >Join
+          Hospital</button>
+      </form>
+    </div>
+  </div>
+  

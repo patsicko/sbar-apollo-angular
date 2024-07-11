@@ -42,3 +42,12 @@ export interface CreateHospitalInput {
     name:string
     departmentId:number
   }
+
+  export interface CreateStaffInput{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: string; 
+    hospitalId: number;
+  }

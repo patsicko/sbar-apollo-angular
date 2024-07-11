@@ -13,6 +13,10 @@
           <span class="material-icons mr-3">business</span>
           Departments
         </a>
+        <a (mouseenter)="showDepartments()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
+          <span class="material-icons mr-3">people</span>
+          Staff
+        </a>
       </nav>
     </div>
   </aside>
@@ -20,13 +24,18 @@
     <router-outlet ></router-outlet>
 
     <div *ngIf="showDepartmentList" (mouseenter)="keepDepartmentsVisible()" class="absolute bg-[#355f7e] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-full md:w-80 top-5 left-5 z-20 h-2/3">
-      <div class="flex justify-between items-center mb-2">
-        <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddDepartmentModal=true">Add Department</button>
+      <div *ngIf="isAdmin" class="flex justify-between items-center mb-2">
+        <button  class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddDepartmentModal=true">Add Department</button>
         <span class="material-icons cursor-pointer font-bold text-gray-400" (click)="showDepartmentList=false">
           close
         </span>
       </div>
+      <div class="flex justify-between items-center mb-2">
       <h3 class="text-xl font-semibold mb-4">Departments</h3>
+      <span *ngIf="!isAdmin" class="material-icons cursor-pointer font-bold text-gray-400" (click)="showDepartmentList=false">
+        close
+      </span>
+       </div>
       <ul class="overflow-y-scroll h-1/2 no-scrollbar">
           <li *ngFor="let department of departments"    (click)="isSmallScreen? showUnits(department.id):''"   (mouseenter)="!isSmallScreen ? showUnits(department.id):'' "  class="flex justify-between items-center cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
               {{ department.name }}
@@ -38,17 +47,25 @@
   </div>
 
   <div *ngIf="showUnitList" (mouseenter)="keepUnitsVisible()" class="absolute bg-[#134e79] text-[#cbd5e0] font-bold shadow-lg rounded-lg p-6 w-full md:w-80 top-5 md:left-[352px] z-30 h-2/3">
-    <div class="flex justify-between items-center mb-2">
-      <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddUnitModel=true">Add Unit</button>
-      <span class="material-icons cursor-pointer font-bold" (click)="showUnitList=false">
+
+    <div *ngIf="isAdmin" class="flex justify-between items-center mb-2">
+      <button  class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddUnitModel=true">Add Unit</button>
+      <span class="material-icons cursor-pointer font-bold text-gray-400" (click)="showUnitList=false">
         close
       </span>
     </div>
+    <div class="flex justify-between items-center mb-2">
       <h3 class="text-xl font-semibold mb-4">Units of {{ selectedDepartment.name }}</h3>
+    <span *ngIf="!isAdmin" class="material-icons cursor-pointer font-bold text-gray-400" (click)="showUnitList=false">
+      close
+    </span>
+     </div>
+   
+    
       <ul class="overflow-y-scroll h-1/2 no-scrollbar">
           <li *ngFor="let unit of units" (click)="isSmallScreen ? showPatients(unit.id):''"   (mouseenter)="!isSmallScreen ? showPatients(unit.id):''; selectUnit(unit)" class="flex justify-between items-center cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
               {{ unit.name }}
-              <button (click)="deleteUnit(unit.id)" class="text-red-600 hover:text-red-800 ml-2">
+              <button *ngIf="isAdmin" (click)="deleteUnit(unit.id)" class="text-red-600 hover:text-red-800 ml-2">
                   <span class="material-icons">delete</span>
               </button>
           </li>
@@ -176,7 +193,7 @@
         </tr>
         </tbody>
       </table>
-      <p *ngIf="!filteredSbars && !sbars || filteredSbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
+      <p *ngIf="!filteredSbars && !sbars || filteredSbars.length === 0 &&!sbars" class="text-center text-gray-500">No SBARs available.</p>
       
     </div>
 
@@ -262,7 +279,7 @@
     <div *ngIf="showCreateSbarForm" class="fixed  inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center z-30 h-auto ">
       <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-2/3 ml-28 mt-14 ">
         <h2 class="text-xl font-semibold mb-6">Add SBAR to {{selectedPatient.firstName}} {{selectedPatient.lastName}}</h2>
-        <form [formGroup]="createSbarForm" (ngSubmit)="addSbar()">
+        <form [formGroup]="createSbarForm" (ngSubmit)="submitSbar()">
           <div class="grid grid-cols-2 gap-4">
             <div class="mb-4">
               <label class="block mb-2 text-lg font-medium" for="situation">Situation</label>

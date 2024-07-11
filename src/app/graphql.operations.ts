@@ -169,3 +169,31 @@ $createUnityInput: CreateUnityInput!
   }
 }
 `
+
+export const CREATE_STAFF = gql`
+mutation createStaff($createStaffInput:CreateStaffInput!){
+  createStaff(createStaffInput:$createStaffInput){
+    id
+    firstName
+    lastName
+    email
+    role
+  }
+}
+`
+
+export const GET_STAFF=gql `
+query getStaff{
+  allUsers{
+    id
+    firstName
+    lastName
+    email
+    role
+    approved
+    hospital{
+      hospitalName
+    }
+  }
+}
+`

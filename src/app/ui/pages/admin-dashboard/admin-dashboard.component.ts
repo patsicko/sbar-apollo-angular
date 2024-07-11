@@ -210,7 +210,7 @@ export class AdminDashboardComponent implements OnInit {
   
   }
 
-  addSbar(){
+  submitSbar(){
     this.submitted=true
     if(this.createSbarForm.valid){
       const sbarInput=this.createSbarForm.value
@@ -218,7 +218,7 @@ export class AdminDashboardComponent implements OnInit {
     
       this.departmentService.createSbar(sbarInput).subscribe({
         next:(result=>{
-         
+          this.createSbarForm.reset()
           this.showCreateSbarForm=false
           this.showSbars(this.selectedPatient.id);
           this.toastr.success('Sbar aded successfully')
