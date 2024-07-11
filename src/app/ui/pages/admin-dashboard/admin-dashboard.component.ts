@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
+  isSmallScreen: boolean=false;
   showDepartmentList = false;
   showUnitList = false;
   showPatientList = false;
@@ -23,15 +24,18 @@ export class AdminDashboardComponent implements OnInit {
   patients: any[] = [];
   sbars: any[] = [];
   filteredSbars:any[]=[]
+  selectedDepartment:any
   selectedDepartmentName = '';
   selectedUnit: any;
   selectedPatient: any;
   showAddPatientModal=false
   showAddDepartmentModal=false
+  showAddUnitModel=false
   submitted:boolean=false;
   addPatientForm:FormGroup
   createSbarForm:FormGroup
   addDepartmentForm:FormGroup
+  addUnitForm:FormGroup
   showCreateSbarForm:boolean=false
   filterForm: FormGroup;
   filtering:boolean=false
@@ -64,14 +68,27 @@ export class AdminDashboardComponent implements OnInit {
     }),
     this.addDepartmentForm=this.fb.group({
       name:['',Validators['required']]
-    })
-   
+    }),
+    this.addUnitForm=this.fb.group({
+      name:['',Validators['required']]
+    }),
+    this.checkScreenSize();
    }
 
   ngOnInit(): void {
     this.getDepartments();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+  checkScreenSize() {
+    this.isSmallScreen = window.innerWidth < 768; 
+  }
+
+
+  
  
 
   showDepartments(): void {
@@ -111,8 +128,8 @@ export class AdminDashboardComponent implements OnInit {
       next: result => {
         this.units = result.data.getUnities;
         this.stateService.setUnitsCount(this.units.length);
-        const selectedDepartment = this.departments.find(dept => dept.id === departmentId);
-        this.selectedDepartmentName = selectedDepartment?.name || '';
+        this. selectedDepartment = this.departments.find(dept => dept.id === departmentId);
+        this.selectedDepartmentName = this.selectedDepartment?.name || '';
         this.showUnitList = true;
       },
       error: error => {
@@ -235,6 +252,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   
     this.filteredSbars = filteredSbars;
+    console.log("filtered sbars",filteredSbars)
     this.filterForm.reset()
    
   
@@ -280,4 +298,35 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
   
+  addUnit(){
+    if(this.addUnitForm.valid){
+      const addUnitData=this.addUnitForm.value
+      addUnitData.departmentId=this.selectedDepartment.id
+      this.departmentService.addUnit(addUnitData).subscribe({
+        next:(result=>{
+          if(result){
+            this.showAddUnitModel=false
+            this.showUnitList=true
+            this.toastr.success("Unit added successfully")
+          }
+        }),
+        error:(error=>{
+          this.toastr.error(error.message);
+          throw new Error(error.message)
+        })
+      })
+    }
+  }
+  
+  deleteDepartment(departmentId:number){
+
+  }
+
+  deleteUnit(unitId:number){
+
+  }
+
+  deletePatient(patientId:number){
+
+  }
 }

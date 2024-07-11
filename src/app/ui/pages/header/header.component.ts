@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isMenuOpen = false;
 
   constructor(
     private authService: AuthService, 

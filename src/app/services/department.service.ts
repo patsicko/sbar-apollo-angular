@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR, TRANSFER_PATIENT, ADD_DEPARTMENT } from '../graphql.operations';
+import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR, TRANSFER_PATIENT, ADD_DEPARTMENT, ADD_UNIT } from '../graphql.operations';
 import { CookieService } from 'ngx-cookie-service';
-import { AddPatientInput, CreateDepartmentInput, CreateSbarInput, TransferPatientInput } from '../interfaces/user.dto';
+import { AddPatientInput, CreateDepartmentInput, CreateSbarInput, CreateUnityInput, TransferPatientInput } from '../interfaces/user.dto';
+import { query } from '@angular/animations';
 
 
 @Injectable({
@@ -130,4 +131,29 @@ export class DepartmentService {
       },
     })
   }
+
+  addUnit(createUnityInput:CreateUnityInput):Observable<any>{
+    return this.apollo.mutate({
+      mutation:ADD_UNIT,
+      variables:{
+        createUnityInput
+      },
+  
+      refetchQueries:[
+       {
+        query:GET_UNITS,
+        variables: { departmentId:createUnityInput.departmentId },
+        context:{
+          headers:this.getAuthHeaders()
+        }
+       
+       }
+
+      ],
+      context:{
+        headers:this.getAuthHeaders()
+      },
+    })
+  }
+
 }

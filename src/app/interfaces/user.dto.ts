@@ -37,3 +37,8 @@ export interface CreateHospitalInput {
   export interface CreateDepartmentInput{
     name:string
   }
+
+  export interface CreateUnityInput{
+    name:string
+    departmentId:number
+  }

@@ -1,6 +1,6 @@
-<div class="flex h-screen">
-  <!-- Sidebar -->
-  <aside class="w-64 bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto">
+<div class="flex h-screen flex-col md:flex-row ">
+ 
+  <aside class="w-full md:w-64  bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto no-scrollbar">
     <div class="p-6">
       <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
       <hr class="my-8">
@@ -13,64 +13,84 @@
           <span class="material-icons mr-3">business</span>
           Departments
         </a>
-
-       
-        <!-- Other sidebar links -->
       </nav>
     </div>
   </aside>
-
-  <!-- Main content -->
-  <main class="flex-1 p-10 bg-gray-100 overflow-y-auto relative" >
-   
+  <main class="flex-1 p-10 bg-gray-100 overflow-y-auto no-scrollbar  relative" >
     <router-outlet ></router-outlet>
 
-    <!-- Departments Modal -->
-    <div *ngIf="showDepartmentList" (mouseenter)="keepDepartmentsVisible()" class="absolute bg-[#355f7e] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-80 top-5 left-5 z-10">
-      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showAddDepartmentModal=true">Add Department</button>
+    <div *ngIf="showDepartmentList" (mouseenter)="keepDepartmentsVisible()" class="absolute bg-[#355f7e] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-full md:w-80 top-5 left-5 z-20 h-2/3">
+      <div class="flex justify-between items-center mb-2">
+        <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddDepartmentModal=true">Add Department</button>
+        <span class="material-icons cursor-pointer font-bold text-gray-400" (click)="showDepartmentList=false">
+          close
+        </span>
+      </div>
       <h3 class="text-xl font-semibold mb-4">Departments</h3>
-      <ul>
-        <li *ngFor="let department of departments" (mouseenter)="showUnits(department.id)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
-          {{ department.name }}
-        </li>
+      <ul class="overflow-y-scroll h-1/2 no-scrollbar">
+          <li *ngFor="let department of departments"    (click)="isSmallScreen? showUnits(department.id):''"   (mouseenter)="!isSmallScreen ? showUnits(department.id):'' "  class="flex justify-between items-center cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+              {{ department.name }}
+              <button (click)="deleteDepartment(department.id)" class="text-red-600 hover:text-red-800 ml-2">
+                  <span class="material-icons">delete</span>
+              </button>
+          </li>
       </ul>
-    </div>
+  </div>
 
-    <!-- Units Modal -->
-    <div *ngIf="showUnitList" (mouseenter)="keepUnitsVisible()" class="absolute bg-[#317eb4] text-[#cbd5e0] font-bold shadow-lg rounded-lg p-6 w-80 top-5 left-[352px] mt-20 z-10">
-      <h3 class="text-xl font-semibold mb-4">Units of {{ selectedDepartmentName }}</h3>
-      <ul>
-        <li *ngFor="let unit of units" (mouseenter)="showPatients(unit.id); selectUnit(unit)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
-          {{ unit.name }}
-        </li>
+  <div *ngIf="showUnitList" (mouseenter)="keepUnitsVisible()" class="absolute bg-[#134e79] text-[#cbd5e0] font-bold shadow-lg rounded-lg p-6 w-full md:w-80 top-5 md:left-[352px] z-30 h-2/3">
+    <div class="flex justify-between items-center mb-2">
+      <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddUnitModel=true">Add Unit</button>
+      <span class="material-icons cursor-pointer font-bold" (click)="showUnitList=false">
+        close
+      </span>
+    </div>
+      <h3 class="text-xl font-semibold mb-4">Units of {{ selectedDepartment.name }}</h3>
+      <ul class="overflow-y-scroll h-1/2 no-scrollbar">
+          <li *ngFor="let unit of units" (click)="isSmallScreen ? showPatients(unit.id):''"   (mouseenter)="!isSmallScreen ? showPatients(unit.id):''; selectUnit(unit)" class="flex justify-between items-center cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+              {{ unit.name }}
+              <button (click)="deleteUnit(unit.id)" class="text-red-600 hover:text-red-800 ml-2">
+                  <span class="material-icons">delete</span>
+              </button>
+          </li>
       </ul>
-    </div>
+  </div>
 
-  
-    <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598] text-[#cbd5e0] shadow-lg rounded-lg p-6 w-[380px] top-5 left-[624px] mt-20 z-10">
-      <button class="rounded-md bg-blue-600 text-white px-4 py-2 font-bold m-4 text-lg" (click)="showAddPatientModal=true">Add  Patient</button>
+  <div *ngIf="showPatientList" (mouseenter)="keepPatientsVisible()" class="absolute bg-[#206598]  text-[#cbd5e0] shadow-lg rounded-lg p-6 w-full md:w-80 top-5 left-0 md:left-[680px] z-40 h-2/3">
+    <div class="flex justify-between items-center mb-2">
+      <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded" (click)="showAddPatientModal=true">Add Patient</button>
+      <span class="material-icons cursor-pointer font-bold text-gray-400" (click)="showPatientList=false">
+        close
+      </span>
+    </div>
       <h3 class="text-xl font-semibold mb-4">Patients in {{ selectedUnit.name }}</h3>
-      <div class="h-60 overflow-y-scroll">
-      <table class="min-w-40 bg-[#206598] text-[#cbd5e0] ">
-        <thead>
-          <tr>
-            <th class="py-2 px-4 border-b">ID</th>
-            <th class="py-2 px-4 border-b">First Name</th>
-            <th class="py-2 px-4 border-b">Last Name</th>
-          </tr>
-        </thead>
-        <tbody >
-          <tr *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient)" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
-            <td class="py-2 px-4 border-b">{{patient.id}}</td>
-            <td class="py-2 px-4 border-b">{{ patient.firstName }}</td>
-            <td class="py-2 px-4 border-b">{{ patient.lastName }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </div>
+      <div class="h-60 overflow-y-scroll no-scrollbar">
+          <table class="min-w-40 bg-[#206598] text-[#cbd5e0]">
+              <thead>
+                  <tr>
+                      <th class="py-2 px-4 border-b text-left">ID</th>
+                      <th class="py-2 px-4 border-b text-left">First Name</th>
+                      <th class="py-2 px-4 border-b text-left">Last Name</th>
+                      <th class="py-2 px-4 border-b text-left">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient);showPatientList=false;showUnitList=false" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+                      <td class="py-2 px-4 border-b text-left">{{patient.id}}</td>
+                      <td class="py-2 px-4 border-b text-left">{{ patient.firstName }}</td>
+                      <td class="py-2 px-4 border-b text-left">{{ patient.lastName }}</td>
+                      <td class="py-2 px-4 border-b text-left">
+                          <button  class="text-white hover:text-blue-800">
+                              <span class="material-icons">visibility</span>
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+    
+   
 
-    <!-- SBAR Details Modal -->
     <div *ngIf="showSbarDetails" (mouseenter)="keepSbarDetailsVisible()" class="absolute bg-white text-gray-900 shadow-lg rounded-lg p-6 top-0 left-0 w-full h-full z-20 overflow-auto">
       <h3 class="text-xl font-semibold mb-4">SBARs of {{ selectedPatient?.firstName }} {{ selectedPatient?.lastName }}</h3>
       <div class="flex gap-4  items-start justify-start ">
@@ -104,64 +124,61 @@
       </div>
     </div>
 
-    
-  
-      <table *ngIf="!filtering && sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
-        <thead>
-          <tr>
-            <th class="py-2 px-4 border-b">Id</th>
-            <th class="py-2 px-4 border-b">Situation</th>
-            <th class="py-2 px-4 border-b">Background</th>
-            <th class="py-2 px-4 border-b">Assessment</th>
-            <th class="py-2 px-4 border-b">Recommendation</th>
-            <th class="py-2 px-4 border-b">Created by</th>
-            <th class="py-2 px-4 border-b">Created at</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sbar of sbars">
-            <td class="py-2 px-4 border-b">{{ sbar.id }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.situation }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.background }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.assessment }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.recommendation }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.createdAt }} </td>
-          </tr>
-        </tbody>
-      </table>
+     <table *ngIf="!filtering && sbars && sbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
+    <thead>
+        <tr>
+            <th class="py-2 px-4 border-b text-left">Id</th>
+            <th class="py-2 px-4 border-b text-left">Situation</th>
+            <th class="py-2 px-4 border-b text-left">Background</th>
+            <th class="py-2 px-4 border-b text-left">Assessment</th>
+            <th class="py-2 px-4 border-b text-left">Recommendation</th>
+            <th class="py-2 px-4 border-b text-left">Created by</th>
+            <th class="py-2 px-4 border-b text-left">Created at</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let sbar of sbars">
+            <td class="py-2 px-4 border-b text-left">{{ sbar.id }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.situation }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.background }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.assessment }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.recommendation }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.createdAt }}</td>
+        </tr>
+    </tbody>
+</table>
+
       <p *ngIf="!sbars || sbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
 
 
       <table *ngIf="filteredSbars && filteredSbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
-            <th class="py-2 px-4 border-b">Id</th>
-            <th class="py-2 px-4 border-b">Situation</th>
-            <th class="py-2 px-4 border-b">Background</th>
-            <th class="py-2 px-4 border-b">Assessment</th>
-            <th class="py-2 px-4 border-b">Recommendation</th>
-            <th class="py-2 px-4 border-b">Created by</th>
-            <th class="py-2 px-4 border-b">Created at</th>
-          </tr>
+            <th class="py-2 px-4 border-b text-left">Id</th>
+            <th class="py-2 px-4 border-b text-left">Situation</th>
+            <th class="py-2 px-4 border-b text-left">Background</th>
+            <th class="py-2 px-4 border-b text-left">Assessment</th>
+            <th class="py-2 px-4 border-b text-left">Recommendation</th>
+            <th class="py-2 px-4 border-b text-left">Created by</th>
+            <th class="py-2 px-4 border-b text-left">Created at</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let sbar of filteredSbars">
-            <td class="py-2 px-4 border-b">{{ sbar.id }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.situation }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.background }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.assessment }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.recommendation }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
-            <td class="py-2 px-4 border-b">{{ sbar.createdAt }} </td>
-          </tr>
+            <tr *ngFor="let sbar of filteredSbars">
+            <td class="py-2 px-4 border-b text-left">{{ sbar.id }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.situation }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.background }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.assessment }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.recommendation }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.createdBy?.role || 'N/A' }} {{ sbar.createdBy?.lastName || '' }}</td>
+            <td class="py-2 px-4 border-b text-left">{{ sbar.createdAt }}</td>
+        </tr>
         </tbody>
       </table>
       <p *ngIf="!filteredSbars && !sbars || filteredSbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
       
     </div>
-
-
 
     <div *ngIf="showAddPatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
       <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-lg">
@@ -219,8 +236,31 @@
     </div>
 
 
-    <div *ngIf="showCreateSbarForm" class="fixed inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center z-30">
-      <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-2/3 ml-28 mt-6">
+    <div *ngIf="showAddUnitModel" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+      <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <div class="flex justify-between items-center">
+          <h2 class="text-3xl font-bold text-white mb-6">Add Unit </h2>
+          <span class="material-icons cursor-pointer font-bold " (click)="showAddUnitModel=false">
+            close
+            </span>
+        </div>
+       
+        <form [formGroup]="addUnitForm" (ngSubmit)="addUnit()">
+          <div class="mb-4">
+            <label for="name" class="block text-white  font-bold mb-2">Unit Name</label>
+            <input formControlName="name" type="text" id="name" class="w-full p-2 border rounded outline-none text-black" />
+            <div *ngIf="addUnitForm.get('name')?.hasError('required') && (addUnitForm.get('name')?.touched || submitted)  " class="text-red-700 font-bold text-lg"> Unit name is required</div>
+          </div>
+          
+          <div class="flex justify-end">
+            <button type="submit" class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded">Add unit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="showCreateSbarForm" class="fixed  inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center z-30 h-auto ">
+      <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-2/3 ml-28 mt-14 ">
         <h2 class="text-xl font-semibold mb-6">Add SBAR to {{selectedPatient.firstName}} {{selectedPatient.lastName}}</h2>
         <form [formGroup]="createSbarForm" (ngSubmit)="addSbar()">
           <div class="grid grid-cols-2 gap-4">
@@ -255,8 +295,5 @@
       </div>
     </div>
     
-
-    
-
   </main>
 </div>

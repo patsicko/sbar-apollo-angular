@@ -33,7 +33,9 @@ export class AuthService {
   logout(): void {
     this.cookieService.delete('accessToken', '/'); 
     this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload(); 
+    });
     this.toastr.warning('You logged out!')
   }
 }

@@ -158,3 +158,14 @@ mutation($createDepartmentInput:CreateDepartmentInput!){
   }
 }
 `
+
+export const ADD_UNIT = gql `
+mutation createUnity(
+$createUnityInput: CreateUnityInput!
+){
+  createUnity(createUnityInput:$createUnityInput){
+    id
+    name
+  }
+}
+`

@@ -1,15 +1,18 @@
-<div class="container mx-auto flex justify-between items-center">
+<div class="container mx-auto flex flex-wrap items-center justify-between p-6">
   <h1 class="text-3xl font-bold text-[#4fd1c5]">SBAR Healthcare</h1>
-  <nav>
-    <a routerLink="/home" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Home</a>
+  <button (click)="isMenuOpen = !isMenuOpen" class="md:hidden text-[#4fd1c5] focus:outline-none">
+    <span class="material-icons">menu</span>
+  </button>
+  <nav [ngClass]="{'block': isMenuOpen, 'hidden': !isMenuOpen}" class="w-full md:flex md:w-auto mt-4 md:mt-0">
+    <a routerLink="/home" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Home</a>
     <ng-container *ngIf="isLoggedIn; else loggedOut">
-      <a routerLink="/dashboard/admin" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Dashboard</a>
-      <a routerLink="/profile" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Profile</a>
-      <a routerLink="/notifications" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Notifications</a>
-      <a (click)="logout()" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md cursor-pointer">Logout</a>
+      <a routerLink="/dashboard/admin" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Dashboard</a>
+      <a routerLink="/profile" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Profile</a>
+      <a routerLink="/notifications" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Notifications</a>
+      <a (click)="logout()" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md cursor-pointer">Logout</a>
     </ng-container>
     <ng-template #loggedOut>
-      <a routerLink="/login" class="text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Login</a>
+      <a routerLink="/login" class="block md:inline-block text-[#4fd1c5] hover:bg-[#2d5261] px-4 py-2 rounded-md">Login</a>
     </ng-template>
   </nav>
 </div>
