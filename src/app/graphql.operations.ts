@@ -3,14 +3,24 @@ import { gql } from "apollo-angular";
 
 export const GET_USERS=gql`
 
-query GetAllUsers{
-allUsers{
-  id
-  firstName
-  lastName
-  email
-  password
-}
+query getStaff{
+  allUsers{
+    id
+    firstName
+    lastName
+    email
+    role
+    approved
+    hospital{
+      hospitalName
+    }
+    department{
+      name
+    }
+    unity{
+      name
+    }
+  }
 }
 `
 
@@ -197,3 +207,22 @@ query getStaff{
   }
 }
 `
+
+export const ASSIGN_DEPARTMENT=gql`
+mutation($assignDepartmentInput:AssignDepartmentInput!){
+  assignDepartment(assignDepartmentInput:$assignDepartmentInput){
+    id
+    firstName
+    lastName
+    email
+    role
+    department{
+      name
+    }
+    unity{
+      name
+    }
+  }
+}
+`
+

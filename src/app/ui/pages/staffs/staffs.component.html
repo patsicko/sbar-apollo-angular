@@ -1,6 +1,6 @@
 <div class="bg-[#e4ecf1] p-6 rounded-lg shadow-lg overflow-y-auto">
     <h2 class="text-3xl font-bold text-[#2f485a] mb-6">Manage Staffs</h2>
-    <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded mb-6">Add Staff</button>
+    <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded mb-6"><a href="create/staff">Add Staff</a></button>
   
     <table  class="w-full text-sm text-left rtl:text-right bg-[#2f485a] text-white mb-28 p-8">
         
@@ -25,6 +25,13 @@
                 <th scope="col" class="px-6 py-3 border-b">
                     Role
                 </th>
+
+                <th scope="col" class="px-6 py-3 border-b">
+                    Department
+                </th>
+                <th scope="col" class="px-6 py-3 border-b">
+                    Unit
+                </th>
                 
                 <th scope="col" class=" py-3 border-b">
                     Edit
@@ -45,7 +52,9 @@
               <td class="px-6 py-3">{{staff.lastName}}</td>
               <td class="px-6 py-3">{{staff.email}}</td>
               <td class="px-6 py-3">{{staff.role}}</td>
-              <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
+              <td class="px-6 py-3">{{staff.department?.name}}</td>
+              <td class="px-6 py-3">{{staff.unity?.name}}</td>
+              <td><button (click)="editStaff(staff)" ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
               <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
             </tr>
             
@@ -54,3 +63,32 @@
 
   </div>
   
+
+  <div *ngIf="showEditStaffModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+    <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <div class="flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-white mb-6">Edit Staff: {{selectedStaff?.firstName}} {{selectedStaff?.lastName}}</h2>
+        <span class="material-icons cursor-pointer font-bold" (click)="showEditStaffModal=false">close</span>
+      </div>
+  
+      <form [formGroup]="editStaffForm" (ngSubmit)="updateStaff()">
+        <div class="mb-4">
+          <label for="department" class="block text-white font-bold mb-2">Department</label>
+          <select formControlName="departmentId" id="department" class="w-full p-2 border rounded outline-none text-black" (change)="onDepartmentChange($event)">
+            <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
+          </select>
+        </div>
+  
+        <div class="mb-4">
+          <label for="unit" class="block text-white font-bold mb-2">Unit</label>
+          <select  formControlName="unityId" id="unit" class="w-full p-2 border rounded outline-none text-black">
+            <option *ngFor="let unity of availableUnities" [value]="unity.id">{{unity.name}}</option>
+          </select>
+        </div>
+  
+        <div class="flex justify-end">
+          <button type="submit" class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded">Update Staff</button>
+        </div>
+      </form>
+    </div>
+  </div>

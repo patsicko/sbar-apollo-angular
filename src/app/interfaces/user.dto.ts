@@ -51,3 +51,11 @@ export interface CreateHospitalInput {
     role: string; 
     hospitalId: number;
   }
+
+
+  export interface AssignDepartmentInput{
+    userId:number,
+    departmentId:number,
+    unityId:number
+    
+  }
