@@ -167,7 +167,7 @@ export class DepartmentService {
 
   getStaff():Observable<any>{
   return this.apollo.watchQuery({
-    query:GET_UNITS,
+    query:GET_STAFF,
     context:{
       headers:this.getAuthHeaders()
     }

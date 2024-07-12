@@ -27,14 +27,14 @@ const routes: Routes = [
   path: 'dashboard/admin',
   component: AdminDashboardComponent,
   canActivate: [AuthGuard],
-    data: { roles: ['admin','nurse'] },
+  data: { roles: ['admin','nurse'] },
   children: [
     { path: '', component: OverviewComponent },
     { path: 'departments', component: DepartmentsComponent },
     { path: 'units', component: UnitsComponent },
     {path:'staffs',component:StaffsComponent},
     {path:'patients',component:PatientsComponent}
-    // Add other child routes here
+    
   ]
 },
 { path: '**', component: NotFoundComponent }
