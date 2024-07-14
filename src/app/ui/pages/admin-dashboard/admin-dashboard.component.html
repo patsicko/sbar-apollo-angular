@@ -2,7 +2,7 @@
  
   <aside class="w-full md:w-64  bg-[#2f485a] text-[#cbd5e0] flex flex-col overflow-y-auto no-scrollbar">
     <div class="p-6">
-      <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Admin Dashboard</h1>
+      <h1 class="text-3xl font-bold mb-6 text-[#4fd1c5]">Dashboard</h1>
       <hr class="my-8">
       <nav class="space-y-2">
         <a routerLink="/dashboard/admin"  (click)="hideModels()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
@@ -91,17 +91,23 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let patient of patients" (click)="showSbars(patient.id); selectPatient(patient);showPatientList=false;showUnitList=false" class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
-                      <td class="py-2 px-4 border-b text-left">{{patient.id}}</td>
-                      <td class="py-2 px-4 border-b text-left">{{ patient.firstName }}</td>
-                      <td class="py-2 px-4 border-b text-left">{{ patient.lastName }}</td>
-                      <td class="py-2 px-4 border-b text-left">
-                          <button  class="text-white hover:text-blue-800">
-                              <span class="material-icons">visibility</span>
-                          </button>
-                      </td>
-                  </tr>
-              </tbody>
+                <ng-container *ngFor="let patient of patients">
+                    <tr *ngIf="patient.isActive" 
+                        (click)="showSbars(patient.id); selectPatient(patient); showPatientList=false; showUnitList=false" 
+                        class="cursor-pointer hover:bg-gray-200 hover:text-gray-900 p-2 rounded-md">
+                        
+                        <td class="py-2 px-4 border-b text-left">{{ patient.id }}</td>
+                        <td class="py-2 px-4 border-b text-left">{{ patient.firstName }}</td>
+                        <td class="py-2 px-4 border-b text-left">{{ patient.lastName }}</td>
+                        <td class="py-2 px-4 border-b text-left">
+                            <button class="text-white hover:text-blue-800">
+                                <span class="material-icons">visibility</span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+            
           </table>
       </div>
   </div>

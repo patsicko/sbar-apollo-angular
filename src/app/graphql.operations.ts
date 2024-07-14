@@ -91,6 +91,7 @@ export const GET_PATIENTS_BY_UNITY = gql`
     id
     firstName
     lastName
+    isActive
   }
 }
 `;
@@ -151,6 +152,7 @@ export const TRANSFER_PATIENT = gql `
     id
     firstName
     lastName
+    isActive
     unity{
       name
       id
