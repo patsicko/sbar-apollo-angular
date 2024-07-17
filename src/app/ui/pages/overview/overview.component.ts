@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StateService } from 'src/app/services/state.service'; // Import the state service
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-overview',
@@ -12,10 +13,14 @@ export class OverviewComponent implements OnInit, OnDestroy {
   unitsCount: number=0;
   patientsCount: number=0;
   sbarsCount: number=0;
-  
+  currentUser:any
+  isAdmin:boolean=false
   private subscriptions: Subscription[] = [];
 
-  constructor(private stateService: StateService) {}
+  constructor(
+    private stateService: StateService,
+    private authService:AuthService
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -32,6 +37,14 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.sbarsCount = count;
       })
     );
+
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      if(this.currentUser.role==='admin'){
+        this.isAdmin=true
+      }
+     console.log("currentUser",this.currentUser)
+    });
   }
 
   ngOnDestroy(): void {

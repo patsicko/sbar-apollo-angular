@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   isMenuOpen = false;
+  currentUser:any
+  isAdmin:boolean=false
 
   constructor(
     private authService: AuthService, 
@@ -20,6 +22,13 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      if(this.currentUser.role==='admin'){
+        this.isAdmin=true
+      }
+     console.log("currentUser",this.currentUser)
+    });
    
     this.authService.isLoggedIn.subscribe(status => {
       this.isLoggedIn = status;

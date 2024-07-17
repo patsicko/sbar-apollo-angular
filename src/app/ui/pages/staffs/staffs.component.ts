@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/services/department.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,6 +11,7 @@ interface Staff {
   lastName: string;
   email: string;
   role: string;
+  approved:boolean;
   department?: { id: number; name: string };
   unity?: { id: number; name: string };
 }
@@ -32,6 +35,7 @@ export class StaffsComponent implements OnInit {
     private departmentService: DepartmentService,
     private userService: UserService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) {
     this.editStaffForm = this.fb.group({
       departmentId: ['', Validators.required],
@@ -65,7 +69,7 @@ export class StaffsComponent implements OnInit {
 
   onDepartmentChange(event: Event) {
     const departmentId = (event.target as HTMLSelectElement).value;
-    this.editStaffForm.patchValue({ unityId: '' }); 
+    this.editStaffForm.patchValue({ unityId: '' });
     this.updateAvailableUnities(parseInt(departmentId, 10));
   }
 
@@ -77,7 +81,7 @@ export class StaffsComponent implements OnInit {
   updateStaff() {
     if (this.editStaffForm.valid) {
       const { departmentId, unityId } = this.editStaffForm.value;
-    
+
       this.departmentService.assignDepartment({
         userId: this.selectedStaff?.id,
         departmentId:parseInt(departmentId),
@@ -93,5 +97,13 @@ export class StaffsComponent implements OnInit {
         }
       });
     }
+  }
+
+  approveUser(userId:number){
+    this.departmentService.approveUser(userId).subscribe({
+      next:(result=>{
+        this.toastr.success('User approved successfully')
+      })
+    })
   }
 }

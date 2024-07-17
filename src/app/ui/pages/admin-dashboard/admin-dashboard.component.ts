@@ -340,4 +340,9 @@ export class AdminDashboardComponent implements OnInit {
   deletePatient(patientId:number){
 
   }
+
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

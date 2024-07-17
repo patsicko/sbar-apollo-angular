@@ -1,4 +1,4 @@
-<div class="container mx-auto flex flex-col items-center justify-center py-10">
+<div class="container mx-auto flex flex-col items-center justify-center py-10 relative z-50">
     <div class="bg-[#2f485a] p-8 rounded-lg shadow-lg w-full max-w-2xl">
       <h2 class="text-2xl font-semibold text-center mb-6 text-[#4fd1c5]">Create Hospital</h2>
       <form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()">
@@ -108,7 +108,7 @@
       </form>
 
       <div class="mt-4 text-[#cbd5e0] text-center">
-        <p>If you are a staff member of an existing hospital, <br> you can join your hospital by providing the hospital-provided ID. <br> Click here to <a class="text-[#4fd1c5]" routerLink="create/staff">Join Hospital</a>.</p>
+        <p>If you are a staff member of an existing hospital, <br> you can join your hospital by providing the hospital-provided ID. <br> Click here to <a class="text-[#4fd1c5]" href="create/staff">Join Hospital</a>.</p>
       </div>
     </div>
   </div>

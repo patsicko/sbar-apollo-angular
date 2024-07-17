@@ -228,3 +228,13 @@ mutation($assignDepartmentInput:AssignDepartmentInput!){
 }
 `
 
+export const APPROVE_USER=gql`
+mutation approveUser($userId:Int!){
+  approveUser(id:$userId){
+    id
+    lastName
+    approved
+  }
+}
+
+`

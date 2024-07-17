@@ -2,43 +2,45 @@
     <h2 class="text-3xl font-bold text-[#2f485a] mb-6">Overview</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+
+      <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-2">{{currentUser.hospital}} ID</h3>
+        <p class="text-lg">{{currentUser.hospitalId}}</p>
+      </div>
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Departments</h3>
-        <p class="text-lg">{{departmentsCount}}</p>
+        <p class="text-lg">4</p>
       </div>
-      <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold mb-2">Units</h3>
-        <p class="text-lg">{{unitsCount}}</p>
-      </div>
+     
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Staff Members</h3>
-        <p class="text-lg">150</p>
+        <p class="text-lg">36</p>
       </div>
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Patients</h3>
-        <p class="text-lg">{{patientsCount}}</p>
+        <p class="text-lg">60</p>
       </div>
     </div>
   
-    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-white p-6 rounded-lg shadow-md mb-6 text-mg">
       <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Recent Activities</h3>
-      <ul class="list-disc list-inside">
-        <li>Patient John Doe was admitted to Cardiology</li>
+      <ul class="list-disc list-inside text-black ">
+        <li >Patient John Doe was admitted to Cardiology</li>
         <li>Staff member Jane Smith transferred to Neurology</li>
         <!-- Add more activities here -->
       </ul>
     </div>
   
-    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-white p-6 rounded-lg shadow-md mb-6 text-md">
       <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Pending Tasks</h3>
-      <ul class="list-disc list-inside">
+      <ul class="list-disc list-inside text-black ">
         <li>Complete SBAR for patient Jane Doe</li>
         <li>Review transfer request for patient Michael Johnson</li>
         <!-- Add more tasks here -->
       </ul>
     </div>
   
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="bg-white p-6 rounded-lg shadow-md text-md">
       <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Announcements</h3>
       <ul class="list-disc list-inside">
         <li>Staff meeting on Friday at 10 AM</li>
