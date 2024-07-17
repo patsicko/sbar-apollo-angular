@@ -13,7 +13,8 @@ import { DepartmentService } from 'src/app/services/department.service';
 export class CreateStaffComponent implements OnInit {
   staffForm: FormGroup;
   submitted = false;
-  availableRoles: string[] = ['nurse', 'doctor', 'admin', 'technician']; 
+  availableRoles: string[] = ['nurse', 'doctor', 'admin', 'technician'];
+  
 
 
 
@@ -28,14 +29,14 @@ export class CreateStaffComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      role: ['', Validators.required], 
-      hospitalId: [null, Validators.required] 
+      role: ['', Validators.required],
+      hospitalId: [null, Validators.required]
     });
 
    }
 
   ngOnInit(): void {
-   
+
   }
 
 
@@ -55,7 +56,7 @@ export class CreateStaffComponent implements OnInit {
             this.router.navigate(['/login']);
             this.toastr.success('Account created successfully')
           }
-          
+
         }),
         error:(error=>{
           this.toastr.error(error.message);
@@ -66,5 +67,5 @@ export class CreateStaffComponent implements OnInit {
   }
 
 
-  
+
 }

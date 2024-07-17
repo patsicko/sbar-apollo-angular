@@ -28,9 +28,9 @@ export class StaffsComponent implements OnInit {
   availableUnities: any[] = [];
   selectedStaff: any ;
   showEditStaffModal = false;
-
   editStaffForm: FormGroup;
-
+  showRemoveUserModal:boolean=false
+  selectedUserId:any = null;
   constructor(
     private departmentService: DepartmentService,
     private userService: UserService,
@@ -106,4 +106,20 @@ export class StaffsComponent implements OnInit {
       })
     })
   }
+
+  removeStaff(id: number) {
+    this.selectedUserId = id;
+    this.showRemoveUserModal = true;
+  }
+
+  confirmRemoveStaff(){
+  const userId=this.selectedUserId
+  this.departmentService.removeUser(userId).subscribe({
+  next:(result=>{
+    this.showRemoveUserModal = false;
+    this.toastr.warning('User removed successfully')
+    })
+  })
+  }
+
 }

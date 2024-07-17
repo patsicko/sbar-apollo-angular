@@ -67,7 +67,7 @@ query GetDepartments{
     unities{
       id
       name
-    }  
+    }
   }
 }
 `;
@@ -112,7 +112,7 @@ query findSbarsByPatient($patientId:Int!){
   }
   createdAt
   }
-  
+
 }
 `
 
@@ -140,7 +140,7 @@ mutation createSbar($createSbarInput:CreateSbarInput!){
       firstName
       lastName
       role
-      
+
     }
   }
 }
@@ -236,5 +236,17 @@ mutation approveUser($userId:Int!){
     approved
   }
 }
+
+`
+export const REMOVE_USER= gql `
+mutation removeUser($userId:Int!){
+  removeUser(id:$userId){
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
 
 `

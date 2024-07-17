@@ -64,7 +64,7 @@
               <td *ngIf="staff.approved"  class="px-6 py-3 text-green-500"> Approved</td>
               <td ><button *ngIf="!staff.approved" (click)="approveUser(staff.id)" class="text-green-500" >approve</button></td>
               <td><button (click)="editStaff(staff)" ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-              <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
+              <td><button (click)="removeStaff(staff.id)" ><mat-icon class="text-red-700">delete</mat-icon></button></td>
             </tr>
 
           </tbody>
@@ -101,3 +101,14 @@
       </form>
     </div>
   </div>
+
+
+  <div *ngIf="showRemoveUserModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+    <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-sm">
+     <h2 class="text-2xl font-bold text-white mb-6">Are you sure you want to remove this user?</h2>
+     <div class="flex justify-end space-x-4">
+      <button (click)="confirmRemoveStaff()" class="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded">Yes</button>
+     <button (click)="showRemoveUserModal=false" class="bg-gray-600 hover:bg-gray-800 text-white px-4 py-2 rounded">No</button>
+      </div>
+     </div>
+     </div>
