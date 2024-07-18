@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 // import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/services/department.service';
@@ -36,6 +37,7 @@ export class StaffsComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ) {
     this.editStaffForm = this.fb.group({
       departmentId: ['', Validators.required],
@@ -80,6 +82,7 @@ export class StaffsComponent implements OnInit {
 
   updateStaff() {
     if (this.editStaffForm.valid) {
+      this.spinner.show()
       const { departmentId, unityId } = this.editStaffForm.value;
 
       this.departmentService.assignDepartment({
@@ -87,10 +90,16 @@ export class StaffsComponent implements OnInit {
         departmentId:parseInt(departmentId),
         unityId:parseInt(unityId)
       }).subscribe({
-        next: () => {
-          this.showEditStaffModal = false;
-          // Refresh the list of staffs
-          this.ngOnInit();
+        next: (data) => {
+          if(data){
+            setTimeout(()=>{
+              this.spinner.hide();
+              this.toastr.success("Staff updated successfully")
+              this.showEditStaffModal = false;
+              this.ngOnInit();
+            })
+          }
+
         },
         error: err => {
           console.error("Error updating staff", err);

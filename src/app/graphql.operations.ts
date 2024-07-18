@@ -123,6 +123,14 @@ mutation createPatient($createPatientInput:CreatePatientInput!){
     id
     firstName
     lastName
+    department{
+      id
+      name
+    }
+    unity{
+      id
+      name
+    }
   }
 }
 `
@@ -146,21 +154,7 @@ mutation createSbar($createSbarInput:CreateSbarInput!){
 }
 `
 
-export const TRANSFER_PATIENT = gql `
- mutation transferPatient($transferPatientInput:TransferPatientInput!){
-  transferPatient(transferPatientInput:$transferPatientInput){
-    id
-    firstName
-    lastName
-    isActive
-    unity{
-      name
-      id
-    }
-  }
-}
 
-`
 
 export const ADD_DEPARTMENT=gql`
 mutation($createDepartmentInput:CreateDepartmentInput!){
@@ -245,6 +239,36 @@ mutation removeUser($userId:Int!){
     firstName
     lastName
     email
+  }
+}
+
+`
+
+export const TRANSFER_PATIENT = gql `
+ mutation transferPatientInput($transferPatientInput:TransferPatientInput!){
+  transferPatient(transferPatientInput:$transferPatientInput){
+    id
+    firstName
+    lastName
+    department{
+      id
+      name
+    }
+    unity{
+      id
+      name
+    }
+  }
+}
+
+`
+
+
+export const DELETE_DEPARTMENT= gql`
+mutation removeDepartment($id: Int!) {
+  removeDepartment(id: $id){
+    success
+    message
   }
 }
 

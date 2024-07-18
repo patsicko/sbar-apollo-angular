@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MaterialModule } from 'src/app/material.module';
@@ -16,8 +16,12 @@ import { OverviewComponent } from './overview/overview.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbidenComponent } from './forbiden/forbiden.component';
 import { CreateStaffComponent } from './create-staff/create-staff.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+interface NgxSpinnerConfig {
+  type?: string;
+}
 
 
 
@@ -35,21 +39,22 @@ import { CreateStaffComponent } from './create-staff/create-staff.component';
     NotFoundComponent,
     ForbidenComponent,
     CreateStaffComponent,
-   
-   
+
+
+
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    
-    
+    NgxSpinnerModule.forRoot({ type: 'ball-spin-clockwise-fade' }),
+    BrowserAnimationsModule,
   ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports:[
     HomepageComponent,
-  
+
   ]
 })
 export class PagesModule { }

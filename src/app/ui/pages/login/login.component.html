@@ -13,13 +13,13 @@
               class="w-full pl-10 pr-3 py-2 rounded-md bg-[#1d2f3c] text-[#cbd5e0] focus:outline-none"
             />
           </div>
-         
+
           <div *ngIf="loginForm.get('email')?.hasError('required') && (loginForm.get('email')?.touched || submitted) "
               class="text-red-500"> Email is required </div>
           <div *ngIf="loginForm.get('email')?.hasError('email') && (loginForm.get('email')?.touched || submitted) "
               class="text-red-500 text-xs">Please enter a valid email address.</div>
         </div>
-  
+
         <div class="mb-6">
           <label class="block text-[#cbd5e0] mb-2" for="password">Password</label>
           <div class="relative">
@@ -34,9 +34,9 @@
           <div *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.touched || submitted)"
                     class="text-red-500">Password is required</div>
         </div>
-  
+
         <button (click)="onSubmit()" type="submit" class="w-full bg-[#4fd1c5] hover:bg-[#38a89d] text-white font-semibold py-2 rounded-md" [disabled]="loginForm.invalid">Login</button>
       </form>
     </div>
   </div>
-  
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade" [fullScreen] = "false"><p style="color: white" > Loading... </p></ngx-spinner>

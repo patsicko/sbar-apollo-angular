@@ -11,12 +11,13 @@ export interface CreateHospitalInput {
     hospitalName:string ,
     district: string,
     sector: string
-    
-  } 
+
+  }
 
   export interface AddPatientInput{
     firstName: string,
     lastName: string,
+    departmentId:number,
     unityId:number
   }
 
@@ -30,7 +31,7 @@ export interface CreateHospitalInput {
 
   export interface TransferPatientInput{
     patientId: number
-    currentUnityId: number
+    targetDepartmentId: number
     targetUnityId: number
   }
 
@@ -48,7 +49,7 @@ export interface CreateHospitalInput {
     lastName: string;
     email: string;
     password: string;
-    role: string; 
+    role: string;
     hospitalId: number;
   }
 
@@ -57,5 +58,5 @@ export interface CreateHospitalInput {
     userId:number,
     departmentId:number,
     unityId:number
-    
+
   }
