@@ -213,12 +213,12 @@ export class AdminDashboardComponent implements OnInit {
     this.departmentService.addPatient(addPatientInput).subscribe({
       next:(async result=>{
           if(result){
-            setTimeout(()=>{
-              this.spinner.hide()
+           
+           this.spinner.hide()
             this.showAddPatientModal = false;
             this.showPatients(this.selectedUnit.id)
             this.toastr.success('patient added successfully')
-            },800)
+           
 
           }
       }),
