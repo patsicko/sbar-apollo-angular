@@ -271,6 +271,14 @@ mutation removeDepartment($id: Int!) {
     message
   }
 }
+`
 
+export const REMOVE_UNIT= gql`
+mutation removeUnity($id:Int!){
+  removeUnity(id:$id){
+    success
+    message
+  }
+}
 
 `

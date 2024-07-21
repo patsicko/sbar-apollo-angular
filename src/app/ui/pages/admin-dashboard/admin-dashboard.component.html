@@ -223,7 +223,7 @@
 
     </div>
 
-    <div *ngIf="showAddPatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+    <div *ngIf="showAddPatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-50">
       <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-lg">
         <div class="flex justify-between items-center">
           <h2 class="text-3xl font-bold text-white mb-6">Add Patient in {{selectedUnit.name}}</h2>
@@ -371,6 +371,16 @@
     </div>
    </div>
    </div>
+
+   <div *ngIf="showRemoveUnitModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+    <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-sm">
+     <h2 class="text-2xl font-bold text-white mb-6">Are you sure you want to remove this unit?</h2>
+     <div class="flex justify-end space-x-4">
+      <button (click)="confirmRemoveUnit()" class="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded">Yes</button>
+     <button (click)="showRemoveUnitModal=false" class="bg-gray-600 hover:bg-gray-800 text-white px-4 py-2 rounded">No</button>
+      </div>
+     </div>
+     </div>
 
   </main>
 </div>

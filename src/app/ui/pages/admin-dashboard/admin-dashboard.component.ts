@@ -50,6 +50,8 @@ export class AdminDashboardComponent implements OnInit {
   targetDepartmentId:number|null=null
   targetUnitId:number | null=null
   showRemoveDepartmentModal:boolean=false
+  showRemoveUnitModal:boolean=false
+  unitToDelete:any
 
   loadingUnits = false;
   departmentToDelete:any
@@ -250,6 +252,7 @@ export class AdminDashboardComponent implements OnInit {
 
         }),
         error:(error=>{
+          this.spinner.hide()
           this.toastr.error(error.message)
           throw new Error(error)
         })
@@ -314,6 +317,7 @@ export class AdminDashboardComponent implements OnInit {
         },
 
         error:error=>{
+          this.spinner.hide()
           this.toastr.error(error.message)
         }
       })
@@ -353,6 +357,7 @@ export class AdminDashboardComponent implements OnInit {
           }
         }),
         error:(error=>{
+          this.spinner.hide()
           this.toastr.error(error.message);
           throw new Error(error.message)
         })
@@ -368,12 +373,48 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   confirmRemoveDepartment(){
-  console.log("department To delete",this.departmentToDelete)
+    this.spinner.show()
+ this.departmentService.removeDepartment(this.departmentToDelete).subscribe({
+  next:(result=>{
+    this.spinner.hide()
+    this.showRemoveDepartmentModal=false
+    this.toastr.success("department deleted successfully")
+  }),
+  error:(error=>{
+    this.spinner.hide()
+    this.showRemoveDepartmentModal=false
+    this.toastr.error(error.message);
+    throw new Error(error.message)
+  })
+ })
   }
 
   deleteUnit(unitId:number){
-
+    console.log("unitId",unitId)
+  this.unitToDelete=unitId
+  console.log("unit to delete",this.unitToDelete)
+  this.showRemoveUnitModal=true
   }
+
+  confirmRemoveUnit(){
+    this.spinner.show()
+   this.departmentService.removeUnit(this.unitToDelete).subscribe({
+    next:(result=>{
+      if(result){
+        this.spinner.hide()
+        this.toastr.success("unit deleted successfully");
+        window.location.reload()
+        this.showRemoveUnitModal=false
+      
+      }
+    }),
+    error:(error=>{
+      this.spinner.hide()
+      this.showRemoveUnitModal=false
+      this.toastr.error(error.message)
+    })
+  })
+}
 
   deletePatient(patientId:number){
 
