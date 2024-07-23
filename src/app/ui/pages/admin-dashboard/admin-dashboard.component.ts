@@ -225,6 +225,7 @@ export class AdminDashboardComponent implements OnInit {
           }
       }),
       error:(error)=>{
+        this.spinner.hide()
         this.toastr.error(error.message)
         throw new Error(error)
       }

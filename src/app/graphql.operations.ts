@@ -123,6 +123,10 @@ mutation createPatient($createPatientInput:CreatePatientInput!){
     id
     firstName
     lastName
+    hospital{
+    hospitalId
+    hospitalName
+    }
     department{
       id
       name
@@ -262,8 +266,6 @@ export const TRANSFER_PATIENT = gql `
 }
 
 `
-
-
 export const DELETE_DEPARTMENT= gql`
 mutation removeDepartment($id: Int!) {
   removeDepartment(id: $id){
@@ -272,13 +274,60 @@ mutation removeDepartment($id: Int!) {
   }
 }
 `
-
 export const REMOVE_UNIT= gql`
 mutation removeUnity($id:Int!){
   removeUnity(id:$id){
     success
     message
   }
+}
+`
+
+export const ARCHIVE_PATIENT = gql`
+mutation archivePatient($patientId:Int!){
+  archivePatient(patientId:$patientId){
+    id
+    firstName
+    lastName
+    isActive
+  }
+}
+
+`
+
+export const GET_ALL_PATIENTS=gql`
+
+query{
+ getPatients{
+  id
+  firstName
+  lastName
+  sbars{
+    situation
+    background
+    assessment
+    recommendation
+    createdBy{
+      id
+      lastName
+      role
+    }
+    createdAt
+  }
+  hospital{
+    hospitalId
+    hospitalName
+  }
+  department{
+    id
+    name
+  }
+  
+  unity{
+    id
+    name
+  }
+}
 }
 
 `
