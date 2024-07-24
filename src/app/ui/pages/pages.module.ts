@@ -18,6 +18,7 @@ import { ForbidenComponent } from './forbiden/forbiden.component';
 import { CreateStaffComponent } from './create-staff/create-staff.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ArchiveComponent } from './archive/archive.component';
 
 interface NgxSpinnerConfig {
   type?: string;
@@ -39,6 +40,7 @@ interface NgxSpinnerConfig {
     NotFoundComponent,
     ForbidenComponent,
     CreateStaffComponent,
+    ArchiveComponent,
 
 
 

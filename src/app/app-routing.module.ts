@@ -14,6 +14,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ForbidenComponent } from './ui/pages/forbiden/forbiden.component';
 import { NotFoundComponent } from './ui/pages/not-found/not-found.component';
 import { CreateStaffComponent } from './ui/pages/create-staff/create-staff.component';
+import { ArchiveComponent } from './ui/pages/archive/archive.component';
 
 const routes: Routes = [
  
@@ -27,13 +28,15 @@ const routes: Routes = [
   path: 'dashboard/admin',
   component: AdminDashboardComponent,
   canActivate: [AuthGuard],
-  data: { roles: ['admin','nurse','doctor'] },
+  data: { roles: ['superAdmin','admin','nurse','doctor'] },
   children: [
     { path: '', component: OverviewComponent },
     { path: 'departments', component: DepartmentsComponent },
     { path: 'units', component: UnitsComponent },
     {path:'staffs',component:StaffsComponent},
-    {path:'patients',component:PatientsComponent}
+    {path:'patients',component:PatientsComponent},
+    {path:'archive',component:ArchiveComponent}
+
     
   ]
 },

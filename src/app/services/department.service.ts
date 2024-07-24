@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR, TRANSFER_PATIENT, ADD_DEPARTMENT, ADD_UNIT, CREATE_STAFF, GET_STAFF, ASSIGN_DEPARTMENT, GET_USERS, APPROVE_USER, REMOVE_USER, DELETE_DEPARTMENT, REMOVE_UNIT, ARCHIVE_PATIENT, GET_ALL_PATIENTS } from '../graphql.operations';
+import { GET_DEPARTMENTS, GET_UNITS,GET_PATIENTS_BY_UNITY, GET_SBARS, ADD_PATIENT, CREATE_SBAR, TRANSFER_PATIENT, ADD_DEPARTMENT, ADD_UNIT, CREATE_STAFF, GET_STAFF, ASSIGN_DEPARTMENT, GET_USERS, APPROVE_USER, REMOVE_USER, DELETE_DEPARTMENT, REMOVE_UNIT, ARCHIVE_PATIENT, GET_ALL_PATIENTS, RESTORE_PATIENT } from '../graphql.operations';
 import { CookieService } from 'ngx-cookie-service';
 import { AddPatientInput, AssignDepartmentInput, CreateDepartmentInput, CreateSbarInput, CreateStaffInput, CreateUnityInput, TransferPatientInput } from '../interfaces/user.dto';
 import { query } from '@angular/animations';
@@ -273,6 +273,28 @@ removeUnit(id:number):Observable<any>{
   archivePatient(patientId:number):Observable<any>{
     return this.apollo.mutate({
       mutation:ARCHIVE_PATIENT,
+      variables:{
+        patientId
+      },
+      context:{
+        headers:this.getAuthHeaders()
+      },
+      refetchQueries:[
+        {query:GET_ALL_PATIENTS,
+          context:{
+            headers:this.getAuthHeaders()
+          }
+        }
+      ]
+      
+    })
+
+  }
+
+
+  restorePatient(patientId:number):Observable<any>{
+    return this.apollo.mutate({
+      mutation:RESTORE_PATIENT,
       variables:{
         patientId
       },

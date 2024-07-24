@@ -1,108 +1,95 @@
 <div class="bg-[#e4ecf1] p-6 rounded-lg shadow-lg overflow-y-auto">
-    <h2 class="text-3xl font-bold text-[#2f485a] mb-6">Manage Patients</h2>
-    <button class="bg-[#4fd1c5] hover:bg-[#38a89d] text-white px-4 py-2 rounded mb-6">Add Patient</button>
-  
-    <table  class="w-full text-sm text-left rtl:text-right text-[#2f485a] mb-28 p-8">
-        
-        <thead class="text-xs  uppercase bg-gray-50 ">
-            <tr>
-              
-                <th scope="col" class="px-6 py-3">
-                    Id
-                </th>
+  <h2 class="text-3xl font-bold text-[#2f485a] mb-6">All Patients</h2>
 
-                <th scope="col" class="px-6 py-3">
-                    First Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Last Name
-                </th>
 
-               
-                
-                <th scope="col" class=" py-3">
-                    Edit
-                </th>
-                <th scope="col" class=" py-3">
-                    Delete
-                </th>
-               
-            </tr>
-        </thead>
-        <tbody class="overflow-auto ">
-            <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class=" px-6 py-4">
-               1
+  <table  class="w-full text-sm text-left rtl:text-right text-[#2f485a] mb-28 p-8">
+      
+      <thead class="text-xs  uppercase bg-gray-50 ">
+          <tr>
+            
+              <th scope="col" class="px-6 py-3">
+                  Id
+              </th>
+
+              <th scope="col" class="px-6 py-3">
+                  First Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Last Name
+              </th>
+
+              <th scope="col" class="px-6 py-3">
+                Department
+              </th>
+
+              <th scope="col" class="px-6 py-3">
+                Unit
+              </th>
+
+             
+              <th scope="col" class=" py-3">
+                Transfer
+            </th>
+             
+              <th scope="col" class=" py-3">
+                  Archive
+              </th>
+             
+          </tr>
+      </thead>
+      <tbody class="overflow-auto ">
+         
+             <ng-container *ngFor="let patient of patients">
+            <tr *ngIf="patient.isActive"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td  class=" px-6 py-4">
+               {{patient.id}}
               </td>
             
-              <td class="px-6 py-3">Malade</td>
-              <td class="px-6 py-3">Patient</td>
+              <td  class="px-6 py-3">{{patient.firstName}}</td>
+              <td  class="px-6 py-3">{{patient.lastName}}</td>
+              <td  class="px-6 py-3">{{patient.department.name}}</td>
+              <td  class="px-6 py-3">{{patient.unity.name}}</td>
            
-              <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-              <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
+             <td><button type="button" (click)="showTransferModal=true;selectPatient(patient)"  class="text-red-300"><mat-icon class="text-red-700">swap_horiz</mat-icon></button></td> 
+              <td ><button (click)="showArchivePatientModal=true; archivePatient(patient.id)"  ><mat-icon class="text-red-700">archive</mat-icon></button></td>
+             
             </tr>
+          </ng-container>
+           
+        </tbody>
+  </table>
 
-            <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class=" px-6 py-4">
-                 1
-                </td>
-              
-                <td class="px-6 py-3">Malade</td>
-                <td class="px-6 py-3">Patient</td>
-             
-                <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-                <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
-              </tr>
+  <div *ngIf="showArchivePatientModal" class="fixed inset-0 bg-black bg-opacity-80 text-white flex items-center justify-center z-30">
+    <div class="bg-[#2f485a] text-[#cbd5e0] p-6 rounded-lg shadow-lg w-full max-w-sm">
+     <h2 class="text-2xl font-bold text-white mb-6">Are you sure you want to remove this patient? The information of this patient will be archived</h2>
+     <div class="flex justify-end space-x-4">
+      <button (click)="confirmArchivePatient()" class="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded">Yes</button>
+     <button (click)="showArchivePatientModal=false" class="bg-gray-600 hover:bg-gray-800 text-white px-4 py-2 rounded">No</button>
+      </div>
+     </div>
+     </div>
 
-              <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class=" px-6 py-4">
-                 1
-                </td>
-              
-                <td class="px-6 py-3">Malade</td>
-                <td class="px-6 py-3">Patient</td>
-             
-                <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-                <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
-              </tr>
 
-              <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class=" px-6 py-4">
-                 1
-                </td>
-              
-                <td class="px-6 py-3">Malade</td>
-                <td class="px-6 py-3">Patient</td>
-             
-                <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-                <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
-              </tr>
+     <div *ngIf="showTransferModal" class="fixed inset-0 z-50 overflow-auto bg-smoke-light flex">
+      <div class="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">Transfer Patient</h2>
+        <form [formGroup]="transferForm" (ngSubmit)="transferPatient()">
+          <div class="mb-4">
+            <label for="department" class="block text-gray-700 text-black">Select Department</label>
+            <select id="department" formControlName="department" (change)="onDepartmentChange($event)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+              <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="unit" class="block text-gray-700 text-black">Select Unit</label>
+            <select id="unit" formControlName="unit" (change)="onUnitChange($event)" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+              <option *ngFor="let unit of units" [value]="unit.id">{{ unit.name }}</option>
+            </select>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded">Transfer</button>
+          <button type="button" (click)="closeTransferModal()" class="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded ml-2">Cancel</button>
+        </form>
+      </div>
+    </div>
 
-              <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class=" px-6 py-4">
-                 1
-                </td>
-              
-                <td class="px-6 py-3">Malade</td>
-                <td class="px-6 py-3">Patient</td>
-             
-                <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-                <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
-              </tr>
-
-              <tr  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class=" px-6 py-4">
-                 1
-                </td>
-              
-                <td class="px-6 py-3">Malade</td>
-                <td class="px-6 py-3">Patient</td>
-             
-                <td><button ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-                <td><button ><mat-icon class="text-red-700">delete</mat-icon></button></td>
-              </tr>
-          </tbody>
-    </table>
-
-  </div>
-  
+</div>

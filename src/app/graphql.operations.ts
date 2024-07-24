@@ -292,7 +292,16 @@ mutation archivePatient($patientId:Int!){
     isActive
   }
 }
-
+`
+export const RESTORE_PATIENT = gql`
+mutation restorePatient($patientId:Int!){
+  restorePatient(patientId:$patientId){
+    id
+    firstName
+    lastName
+    isActive
+  }
+}
 `
 
 export const GET_ALL_PATIENTS=gql`
@@ -302,6 +311,7 @@ query{
   id
   firstName
   lastName
+  isActive
   sbars{
     situation
     background
