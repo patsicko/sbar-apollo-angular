@@ -13,7 +13,12 @@ import { DepartmentService } from 'src/app/services/department.service';
 export class CreateStaffComponent implements OnInit {
   staffForm: FormGroup;
   submitted = false;
-  availableRoles: string[] = ['nurse', 'doctor', 'admin', 'technician'];
+  availableRoles: string[] = ['nurse', 'doctor', 'admin', 'anestesist',"coordinator",
+      "matron",
+      "hod",
+      "dg",
+      "nurse",
+      "mid"];
   
 
 

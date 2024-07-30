@@ -28,7 +28,12 @@ const routes: Routes = [
   path: 'dashboard/admin',
   component: AdminDashboardComponent,
   canActivate: [AuthGuard],
-  data: { roles: ['superAdmin','admin','nurse','doctor'] },
+  data: { roles: ['superAdmin','admin','nurse','doctor','anesthesist',"coordinator",
+      "matron",
+      "hod",
+      "dg",
+      "nurse",
+      "mid"] },
   children: [
     { path: '', component: OverviewComponent },
     { path: 'departments', component: DepartmentsComponent },

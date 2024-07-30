@@ -28,10 +28,10 @@
           Archives
         </a>
 
-        <a routerLink="/dashboard/admin/staffs" (click)="hideModels()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
+        <!-- <a routerLink="/dashboard/admin/staffs" (click)="hideModels()" class="flex items-center p-2 text-base font-medium text-white hover:bg-[#4fd1c5] rounded-md cursor-pointer">
           <span class="material-icons mr-3">compare_arrows</span>
           Handover
-        </a>
+        </a> -->
 
 
       </nav>
@@ -200,7 +200,7 @@
       <p *ngIf="!sbars || sbars.length === 0" class="text-center text-gray-500">No SBARs available.</p>
 
 
-      <table *ngIf="filteredSbars && filteredSbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
+      <table *ngIf="filtering && filteredSbars && filteredSbars.length > 0" class="min-w-full bg-gray-800 text-gray-200">
         <thead>
           <tr>
             <th class="py-2 px-4 border-b text-left">Id</th>

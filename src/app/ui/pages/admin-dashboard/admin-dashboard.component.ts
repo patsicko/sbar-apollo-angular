@@ -171,7 +171,7 @@ export class AdminDashboardComponent implements OnInit {
       next: result => {
 
         this.patients = result.data.findPatientsByUnity;
-        this.stateService.setPatientsCount(this.patients.length);
+        // this.stateService.setPatientsCount(this.patients.length);
         this.showPatientList = true;
       },
       error: error => {
@@ -399,13 +399,13 @@ export class AdminDashboardComponent implements OnInit {
 
   confirmRemoveUnit(){
     this.spinner.show()
-   this.departmentService.removeUnit(this.unitToDelete).subscribe({
+   this.departmentService.removeUnit(this.unitToDelete,this.selectedDepartment.id).subscribe({
     next:(result=>{
       if(result){
         this.spinner.hide()
-        this.toastr.success("unit deleted successfully");
-        window.location.reload()
         this.showRemoveUnitModal=false
+        this.toastr.success("unit deleted successfully");
+      
       
       }
     }),

@@ -52,7 +52,9 @@ ngOnInit(): void {
   this.departmentService.getAllPatients().subscribe({
     next:(result=>{
    if(result){
+    console.log("patients got",result)
     this.patients=result.data.getPatients
+    this.stateService.setPatientsCount(this.patients.length);
     this.spinner.hide()
     
 

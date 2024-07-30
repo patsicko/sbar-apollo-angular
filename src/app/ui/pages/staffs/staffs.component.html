@@ -32,16 +32,16 @@
                 <th scope="col" class="px-6 py-3 border-b">
                     Unit
                 </th>
-                <th scope="col" class=" py-3 border-b">
+                <th *ngIf="isAdmin" scope="col" class=" py-3 border-b">
                   Status
                 </th>
-                <th scope="col" class=" py-3 border-b">
+                <th *ngIf="isAdmin" scope="col" class=" py-3 border-b">
                  Action
                </th>
-               <th scope="col" class=" py-3 border-b">
+               <th *ngIf="isAdmin" scope="col" class=" py-3 border-b">
 
               </th>
-              <th scope="col" class=" py-3 border-b">
+              <th *ngIf="isAdmin" scope="col" class=" py-3 border-b">
 
               </th>
 
@@ -60,11 +60,11 @@
               <td class="px-6 py-3">{{staff.role}}</td>
               <td class="px-6 py-3">{{staff.department?.name}}</td>
               <td class="px-6 py-3">{{staff.unity?.name}}</td>
-              <td *ngIf="!staff.approved"  class="px-6 py-3 text-red-500">Pending</td>
-              <td *ngIf="staff.approved"  class="px-6 py-3 text-green-500"> Approved</td>
-              <td ><button *ngIf="!staff.approved" (click)="approveUser(staff.id)" class="text-green-500" >approve</button></td>
-              <td><button (click)="editStaff(staff)" ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
-              <td><button (click)="removeStaff(staff.id)" ><mat-icon class="text-red-700">delete</mat-icon></button></td>
+              <td *ngIf="!staff.approved && isAdmin"  class="px-6 py-3 text-red-500">Pending</td>
+              <td *ngIf="staff.approved && isAdmin"  class="px-6 py-3 text-green-500"> Approved</td>
+              <td ><button *ngIf="!staff.approved && isAdmin" (click)="approveUser(staff.id)" class="text-green-500" >approve</button></td>
+              <td><button *ngIf="isAdmin" (click)="editStaff(staff)" ><mat-icon class="text-red-500 ">edit</mat-icon></button></td>
+              <td><button *ngIf="isAdmin" (click)="removeStaff(staff.id)" ><mat-icon class="text-red-700">delete</mat-icon></button></td>
             </tr>
 
           </tbody>

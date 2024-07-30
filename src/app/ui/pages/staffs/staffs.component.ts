@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 // import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/services/department.service';
+import { StateService } from 'src/app/services/state.service';
 import { UserService } from 'src/app/services/user.service';
 
 interface Staff {
@@ -32,12 +34,16 @@ export class StaffsComponent implements OnInit {
   editStaffForm: FormGroup;
   showRemoveUserModal:boolean=false
   selectedUserId:any = null;
+  currentUser:any
+  isAdmin:boolean=false
   constructor(
     private departmentService: DepartmentService,
     private userService: UserService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private stateService:StateService,
+    private authService:AuthService
   ) {
     this.editStaffForm = this.fb.group({
       departmentId: ['', Validators.required],
@@ -46,8 +52,17 @@ export class StaffsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      if(this.currentUser.role==='admin'){
+        this.isAdmin=true
+      }
+     console.log("currentUser",this.currentUser)
+    });
     this.userService.getAllUsers().subscribe(response => {
       this.staffs = response.data.allUsers;
+      this.stateService.setStaffsCount(this.staffs.length);
       console.log("current staffs", this.staffs);
     });
 

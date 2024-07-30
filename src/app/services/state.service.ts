@@ -9,11 +9,13 @@ export class StateService {
   private unitsCountSubject = new BehaviorSubject<number>(0);
   private patientsCountSubject = new BehaviorSubject<number>(0);
   private sbarsCountSubject = new BehaviorSubject<number>(0);
+  private staffsCountSubject= new BehaviorSubject<number>(0)
 
   departmentsCount$ = this.departmentsCountSubject.asObservable();
   unitsCount$ = this.unitsCountSubject.asObservable();
   patientsCount$ = this.patientsCountSubject.asObservable();
   sbarsCount$ = this.sbarsCountSubject.asObservable();
+  staffsCount$=this.staffsCountSubject.asObservable()
 
   setDepartmentsCount(count: number) {
     this.departmentsCountSubject.next(count);
@@ -29,5 +31,9 @@ export class StateService {
 
   setSbarsCount(count: number) {
     this.sbarsCountSubject.next(count);
+  }
+
+  setStaffsCount(count:number){
+    this.staffsCountSubject.next(count)
   }
 }

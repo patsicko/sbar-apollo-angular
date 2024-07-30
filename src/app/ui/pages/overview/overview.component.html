@@ -9,43 +9,43 @@
       </div>
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Departments</h3>
-        <p class="text-lg">4</p>
+        <p class="text-lg">{{departmentsCount}}</p>
       </div>
      
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Staff Members</h3>
-        <p class="text-lg">36</p>
+        <p class="text-lg">{{staffsCount}}</p>
       </div>
       <div class="bg-[#2f485a] text-white p-4 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-2">Patients</h3>
-        <p class="text-lg">60</p>
+        <p class="text-lg">{{patientsCount}}</p>
       </div>
     </div>
   
     <div class="bg-white p-6 rounded-lg shadow-md mb-6 text-mg">
-      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Recent Activities</h3>
+      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Hospital ID</h3>
       <ul class="list-disc list-inside text-black ">
-        <li >Patient John Doe was admitted to Cardiology</li>
-        <li>Staff member Jane Smith transferred to Neurology</li>
+        <li >The hospital admin will use the provided hospital id to create staff</li>
+        <li>For better management of credentials, Hospital Id can be provided to the staff to join hospital himself</li>
         <!-- Add more activities here -->
       </ul>
     </div>
   
     <div class="bg-white p-6 rounded-lg shadow-md mb-6 text-md">
-      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Pending Tasks</h3>
+      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Staffs access control</h3>
       <ul class="list-disc list-inside text-black ">
-        <li>Complete SBAR for patient Jane Doe</li>
-        <li>Review transfer request for patient Michael Johnson</li>
+        <li>Admin will approve a joined staff for him to access the system</li>
+        <li>Staff number shows all staffs including non approved ones</li>
         <!-- Add more tasks here -->
       </ul>
     </div>
   
     <div class="bg-white p-6 rounded-lg shadow-md text-md">
-      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Announcements</h3>
-      <ul class="list-disc list-inside">
-        <li>Staff meeting on Friday at 10 AM</li>
-        <li>New COVID-19 guidelines released</li>
-        <!-- Add more announcements here -->
+      <h3 class="text-2xl font-bold text-[#2f485a] mb-4">Discharging Patient</h3>
+      <ul class="list-disc list-inside text-black">
+        <li>Discharging patient consists of archiving all his/her information for future use</li>
+        <li>Once a patient get sick again, he/she can be readmitted by restoring the archive</li>
+  
       </ul>
     </div>
   </div>

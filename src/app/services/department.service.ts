@@ -261,14 +261,27 @@ return this.apollo.mutate({
 })
 }
 
-removeUnit(id:number):Observable<any>{
+removeUnit(id: number, departmentId: number): Observable<any> {
   return this.apollo.mutate({
-    mutation:REMOVE_UNIT,
-    variables:{
+    mutation: REMOVE_UNIT,
+    variables: {
       id
+    },
+    refetchQueries: [
+      {
+        query: GET_UNITS,
+        variables: { departmentId },
+        context: {
+          headers: this.getAuthHeaders()
+        }
+      }
+    ],
+    context: {
+      headers: this.getAuthHeaders()
     }
-  })
-  }
+  });
+}
+
 
   archivePatient(patientId:number):Observable<any>{
     return this.apollo.mutate({
