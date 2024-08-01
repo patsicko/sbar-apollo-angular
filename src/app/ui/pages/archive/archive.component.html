@@ -2,42 +2,42 @@
     <h2 class="text-3xl font-bold text-[#2f485a] mb-6">All Patients</h2>
   
   
-    <table  class="w-full text-sm text-left rtl:text-right text-[#2f485a] mb-28 p-8">
+    <table   class="w-full text-sm text-left rtl:text-right bg-[#2f485a] text-white mb-28 p-8 pr-16">
         
-        <thead class="text-xs  uppercase bg-gray-50 ">
+        <thead class="text-xs  uppercase ">
             <tr>
               
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 border-b">
                     Id
                 </th>
 
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 border-b">
                     First Name
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 border-b">
                     Last Name
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 border-b">
                     Department
                   </th>
     
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 border-b">
                     Unit
                   </th>
 
                
                 
                
-                <th scope="col" class=" py-3">
+                <th scope="col" class=" py-3 border-b">
                     Restore
                 </th>
                
             </tr>
         </thead>
-        <tbody class="overflow-auto ">
+        <tbody class="overflow-auto   bg-[#2f485a] text-white">
            
                <ng-container *ngFor="let patient of patients">
-              <tr *ngIf="!patient.isActive"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <tr *ngIf="!patient.isActive"    class="text-white border-b border-white dark:text-gray-800 dark:border-gray-700 hover:text-gray-50 dark:hover:text-gray-600">
                 <td  class=" px-6 py-4">
                  {{patient.id}}
                 </td>
