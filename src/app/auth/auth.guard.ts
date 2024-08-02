@@ -10,7 +10,8 @@ export class AuthGuard {
   constructor(private router: Router, private cookieService: CookieService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const token = this.cookieService.get('accessToken');
+    // const token = this.cookieService.get('accessToken');
+    const token = localStorage.getItem('accessToken')
     if (token) {
       const decodedToken: any = jwtDecode(token);
       const userRole = decodedToken.role;

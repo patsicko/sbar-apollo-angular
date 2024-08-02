@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   private hasToken(): boolean {
-    return !!this.cookieService.get('accessToken');
+    return !!localStorage.getItem('accessToken');
   }
 
   get isLoggedIn() {
@@ -40,7 +40,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.cookieService.delete('accessToken', '/');
+    // this.cookieService.delete('accessToken', '/');
+    localStorage.removeItem('accessToken')
     this.loggedIn.next(false);
     this.currentUserSubject.next(null); 
     this.router.navigate(['/login']).then(() => {
@@ -50,7 +51,8 @@ export class AuthService {
   }
 
   private checkUser(): void {
-    const token = this.cookieService.get('accessToken');
+    // const token = this.cookieService.get('accessToken');
+    const token = localStorage.getItem('accessToken')
     if (token) {
       const decodedToken: any = jwtDecode(token);
       

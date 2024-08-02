@@ -19,7 +19,8 @@ export class UserService {
   ) { }
   private getAuthHeaders() {
  
-    const token=this.cookieService.get('accessToken')
+    // const token=this.cookieService.get('accessToken')
+    const token=localStorage.getItem('accessToken')
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 

@@ -43,10 +43,12 @@ export class LoginComponent implements OnInit {
            if(data){
              setTimeout(()=>{
               this.spinner.hide()
+              const token=data.data.login.accessToken
+              localStorage.setItem('accessToken',token)
               this.toastr.success('login successfull')
               this.authService.checkLoginStatus();
               this.router.navigate(['/dashboard/admin']);
-            },800)
+            },100)
 
            }
 
