@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,7 +18,8 @@ export class CreateHospitalComponent implements OnInit {
     private fb: FormBuilder,
     private userService:UserService,
     private toastr: ToastrService,
-    private router:Router
+    private router:Router,
+    private spinner: NgxSpinnerService
 
   ) {
     this.hospitalForm = this.fb.group({
@@ -27,7 +29,7 @@ export class CreateHospitalComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -38,16 +40,19 @@ export class CreateHospitalComponent implements OnInit {
   onSubmit(): void {
     this.submitted=true
     if (this.hospitalForm.valid) {
+      this.spinner.show()
       console.log('Form Submitted', this.hospitalForm.value);
       const createHospitalInput=this.hospitalForm.value
       this.userService.createHospital(createHospitalInput).subscribe({
         next:(data=>{
          if(data){
+          this.spinner.hide()
           this.toastr.success('Hospital created successfully')
           this.router.navigate(['/login']);
          }
         }),
         error:(error=>{
+          this.spinner.hide()
           this.toastr.error(error.message)
           throw Error(error)
         })

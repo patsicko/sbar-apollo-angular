@@ -14,7 +14,7 @@ export class AuthGuard {
     const token = localStorage.getItem('accessToken')
     if (token) {
       const decodedToken: any = jwtDecode(token);
-      const userRole = decodedToken.role;
+      const userRole = decodedToken?.role;
       const requiredRoles = route.data['roles'] as Array<string>;
 
       if (requiredRoles.includes(userRole)) {

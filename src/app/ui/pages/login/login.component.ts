@@ -1,4 +1,4 @@
-// login.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
@@ -36,12 +36,14 @@ export class LoginComponent implements OnInit {
 
     this.submitted = true;
     if (this.loginForm.valid) {
+      this.submitted = false;
       this.spinner.show()
       const formData = this.loginForm.value;
       this.userService.login(formData).subscribe({
         next: (data) => {
            if(data){
              setTimeout(()=>{
+              this.loginForm.reset()
               this.spinner.hide()
               const token=data.data.login.accessToken
               localStorage.setItem('accessToken',token)
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit {
           console.log(err.message);
         }
       });
+      this.loginForm.reset()
     }
   }
 }

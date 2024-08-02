@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/services/department.service';
  // Replace with your actual service
@@ -27,7 +28,8 @@ export class CreateStaffComponent implements OnInit {
     private formBuilder: FormBuilder,
     private departmentService:DepartmentService,
     private toastr:ToastrService,
-    private router:Router
+    private router:Router,
+    private spinner: NgxSpinnerService
   ) {
     this.staffForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -50,13 +52,16 @@ export class CreateStaffComponent implements OnInit {
     if (this.staffForm.invalid) {
       return;
     }
-
+    this.submitted = false;
+   this.spinner.show()
     this.departmentService.createStaff(this.staffForm.value)
       .subscribe(
        {
         next:(result=>{
           console.log("result",result);
           if(result){
+
+            this.spinner.hide()
             this.staffForm.reset();
             this.router.navigate(['/login']);
             this.toastr.success('Account created successfully')
@@ -64,6 +69,7 @@ export class CreateStaffComponent implements OnInit {
 
         }),
         error:(error=>{
+          this.spinner.hide()
           this.toastr.error(error.message);
           throw new Error(error.message)
         })

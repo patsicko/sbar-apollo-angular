@@ -1,4 +1,4 @@
-// header.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service'; 
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
   isMenuOpen = false;
   currentUser:any
-  isAdmin:boolean=false
+  // isAdmin:boolean=false
 
   constructor(
     private authService: AuthService, 
@@ -24,10 +24,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
-      if(this.currentUser.role==='admin'){
-        this.isAdmin=true
-      }
-     console.log("currentUser",this.currentUser)
+    //   if(this.currentUser.role==='admin'){
+    //     this.isAdmin=true
+    //   }
+    //  console.log("currentUser",this.currentUser)
     });
    
     this.authService.isLoggedIn.subscribe(status => {

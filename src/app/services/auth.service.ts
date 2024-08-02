@@ -12,14 +12,14 @@ import { Mutation } from 'apollo-angular';
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  private currentUserSubject = new BehaviorSubject<any>(null); // Track current user
+  private currentUserSubject = new BehaviorSubject<any>(null); 
 
   constructor(
     private cookieService: CookieService,
     private router: Router,
     private toastr: ToastrService
   ) {
-    this.checkUser(); // Initialize user data on service instantiation
+    this.checkUser(); 
   }
 
   private hasToken(): boolean {
